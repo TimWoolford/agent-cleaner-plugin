@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Maven: org.jetbrains.teamcity:runtime-util:7.1.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/runtime/runtime-util.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
