@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<assembly>
+     <id>plugin-agent-assembly</id>
+     <includeBaseDirectory>false</includeBaseDirectory>
+     <formats>
+         <format>zip</format>
+     </formats>
+     <fileSets/>
+     <moduleSets>
+        <moduleSet>
+           <useAllReactorProjects>true</useAllReactorProjects>
+           <includes>
+               <include>sns.teamcity:agent-cleaner-plugin-agent</include>
+               <include>sns.teamcity:agent-cleaner-plugin-common</include>
+           </includes> 
+           <binaries>
+               <outputDirectory>agent-cleaner-plugin/lib</outputDirectory>
+               <unpack>false</unpack>
+               <dependencySets>
+                   <dependencySet>
+                        <includes>
+                             <include>*</include>
+                        </includes>
+                   </dependencySet>
+               </dependencySets>
+           </binaries>
+        </moduleSet>
+     </moduleSets>
+</assembly>
+

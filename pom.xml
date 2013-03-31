@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>sns.teamcity</groupId>
+    <artifactId>agent-cleaner-plugin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>agent-cleaner-plugin-server</module>
+        <module>agent-cleaner-plugin-agent</module>
+        <module>agent-cleaner-plugin-common</module>
+        <module>build</module>
+    </modules>
+
+    <properties>
+        <teamcity.devPackage.dir>/Users/tim/Downloads/TeamCity/devPackage</teamcity.devPackage.dir>
+        <teamcity.openapi.version>7.1.4</teamcity.openapi.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jetbrains.teamcity</groupId>
+                <artifactId>server-api</artifactId>
+                <version>${teamcity.openapi.version}</version>
+                <scope>system</scope>
+                <systemPath>${teamcity.devPackage.dir}/server-api.jar</systemPath>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.teamcity</groupId>
+                <artifactId>common-api</artifactId>
+                <version>${teamcity.openapi.version}</version>
+                <scope>system</scope>
+                <systemPath>${teamcity.devPackage.dir}/common-api.jar</systemPath>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.teamcity</groupId>
+                <artifactId>agent-api</artifactId>
+                <version>${teamcity.openapi.version}</version>
+                <scope>system</scope>
+                <systemPath>${teamcity.devPackage.dir}/agent-api.jar</systemPath>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.teamcity</groupId>
+                <artifactId>runtime-util</artifactId>
+                <version>${teamcity.openapi.version}</version>
+                <scope>system</scope>
+                <systemPath>${teamcity.devPackage.dir}/runtime/runtime-util.jar</systemPath>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
