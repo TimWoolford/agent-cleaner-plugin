@@ -4,6 +4,8 @@
       <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/common-api.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/src/openApi-source.jar!/" />
+    </SOURCES>
   </library>
 </component>

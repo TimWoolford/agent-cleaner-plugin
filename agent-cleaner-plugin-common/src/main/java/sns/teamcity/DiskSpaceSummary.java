@@ -36,4 +36,8 @@ public class DiskSpaceSummary {
     public long getTotalSpace() {
         return totalSpace;
     }
+
+    public long getPercentageUsed() {
+        return (freeSpace * 100) / totalSpace;
+    }
 }
