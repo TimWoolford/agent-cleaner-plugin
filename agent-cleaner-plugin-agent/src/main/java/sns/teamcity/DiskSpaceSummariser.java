@@ -14,6 +14,6 @@ public class DiskSpaceSummariser extends AgentLifeCycleAdapter {
     }
 
     public Hashtable<String, String> diskSpaceSummary() {
-        return new DiskSpaceSummaryParser(buildAgent.getConfiguration().getWorkDirectory()).toHashTable();
+        return new DiskSpaceSummary(buildAgent.getConfiguration().getWorkDirectory()).toHashTable();
     }
 }
