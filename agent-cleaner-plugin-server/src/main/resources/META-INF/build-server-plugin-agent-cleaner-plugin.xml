@@ -4,4 +4,8 @@
 
     <bean id="agentDiskspaceTab" class="sns.teamcity.AgentDiskSpaceTab" init-method="register"/>
 
+    <bean id="resourceLocator" class="sns.teamcity.ResourceLocator"/>
+
+    <bean id="agentProvider" class="sns.teamcity.AgentProvider"/>
+
 </beans>
