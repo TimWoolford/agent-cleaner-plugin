@@ -7,8 +7,13 @@ public class DiskSpaceSummary {
     private static final String TOTAL_SPACE = "totalSpace";
     private static final String FREE_SPACE = "freeSpace";
 
-    private long totalSpace;
-    private long freeSpace;
+    private final long totalSpace;
+    private final long freeSpace;
+
+    public DiskSpaceSummary(long freeSpace, long totalSpace) {
+        this.freeSpace = freeSpace;
+        this.totalSpace = totalSpace;
+    }
 
     public DiskSpaceSummary(File file) {
         totalSpace = file.getTotalSpace();
@@ -40,4 +45,9 @@ public class DiskSpaceSummary {
     public long getPercentageUsed() {
         return (freeSpace * 100) / totalSpace;
     }
+
+    public String getFormattedFreeSpace() {
+        return String.format("%,.2f Mb", (double) freeSpace / (1024 * 1024));
+    }
+
 }

@@ -14,7 +14,7 @@
             <tr>
                 <th class="buildAgentName sortable"><span id="SORT_BY_NAME">Agent Name</span></th>
                 <th class="percentage sortable"><span id="SORT_BY_PERCENTAGE">Percentage Used</span></th>
-                <th class="buildSize">Size</th>
+                <th class="freeSpace">Free Space</th>
             </tr>
             </thead>
             <tbody>
@@ -22,7 +22,7 @@
                 <tr>
                     <td class="buildAgentName"><c:out value="${agent.name}"/></td>
                     <td class="percentage"><c:out value="${agent.diskSpaceSummary.percentageUsed}"/>%</td>
-                    <td class="buildSize"><c:out value="${agent.diskSpaceSummary.freeSpace}"/> / <c:out value="${agent.diskSpaceSummary.totalSpace}"/></td>
+                    <td class="freeSpace"><c:out value="${agent.diskSpaceSummary.formattedFreeSpace}"/></td>
                 </tr>
             </c:forEach>
             </tbody>
