@@ -13,4 +13,11 @@ public class DiskSpaceSummaryTest {
 
         assertThat(diskSpaceSummary.getFormattedFreeSpace(), is("1,177.38 Mb"));
     }
+
+    @Test
+    public void showPercentageUsed() {
+        DiskSpaceSummary diskSpaceSummary = new DiskSpaceSummary(10, 100);
+
+        assertThat(diskSpaceSummary.getPercentageUsed(), is(90L));
+    }
 }

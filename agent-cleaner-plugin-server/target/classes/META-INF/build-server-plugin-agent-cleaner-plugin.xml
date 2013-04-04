@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans default-autowire="constructor">
+
+    <bean id="agentDiskspaceTab" class="sns.teamcity.AgentDiskSpaceTab" init-method="register"/>
+
+    <bean id="resourceLocator" class="sns.teamcity.ResourceLocator"/>
+
+    <bean id="agentProvider" class="sns.teamcity.AgentProvider"/>
+
 </beans>

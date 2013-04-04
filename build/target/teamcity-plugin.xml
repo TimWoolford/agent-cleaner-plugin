@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<teamcity-plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:shemas-jetbrains-com:teamcity-plugin-v1-xml">
+<teamcity-plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="urn:shemas-jetbrains-com:teamcity-plugin-v1-xml">
   <info>
     <name>agent-cleaner-plugin</name>
-    <display-name>agent-cleaner-plugin</display-name>
-    <version>snapshot-20133103173401</version>
-    <description>Plugin description</description>
-    <download-url>Plugin download URL</download-url>
-    <email>Plugin author e-mail</email>
-    <vendor>
-      <name>Plugin vendor name</name>
-      <url>Plugin vendor URL</url>
-      <logo>Plugin vendor logo URL</logo>
-    </vendor>
+    <display-name>Build Agent Cleaner</display-name>
+    <version>snapshot-20130404123437</version>
+    <description>Build Agent Disk Space Monitoring and Cleaning</description>
   </info>
   <deployment use-separate-classloader="true" />
 </teamcity-plugin>

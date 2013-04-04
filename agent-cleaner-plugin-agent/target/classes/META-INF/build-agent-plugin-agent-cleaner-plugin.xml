@@ -3,4 +3,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans default-autowire="constructor">
+    <bean id="diskSpaceSummariser" class="sns.teamcity.DiskSpaceSummariser"/>
+
+    <bean id="lifecycle" class="sns.teamcity.AgentCleanerPluginAgentLifecycle"/>
 </beans>
