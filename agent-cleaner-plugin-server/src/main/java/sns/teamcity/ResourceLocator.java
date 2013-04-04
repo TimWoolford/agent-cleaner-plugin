@@ -10,6 +10,10 @@ public class ResourceLocator {
     }
 
     public String agentDiskSpaceTabJsp() {
-        return pluginDescriptor.getPluginResourcesPath("agentDiskSpaceTab.jsp");
+        return jsp("agentDiskSpaceTab");
+    }
+
+    private String jsp(String fileName) {
+        return pluginDescriptor.getPluginResourcesPath(String.format("jsp/%s.jsp", fileName));
     }
 }

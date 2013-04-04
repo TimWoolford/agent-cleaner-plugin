@@ -10,7 +10,11 @@ import java.util.Hashtable;
 import static sns.teamcity.rpc.Handlers.AgentDiskSpace;
 
 public class RpcCaller {
-    private XmlRpcFactory rpcFactory = XmlRpcFactory.getInstance();
+    private final XmlRpcFactory rpcFactory;
+
+    public RpcCaller() {
+        rpcFactory = XmlRpcFactory.getInstance();
+    }
 
     public DiskSpaceSummary diskSpaceSummary(SBuildAgent buildAgent) {
         XmlRpcTarget xmlRpcTarget = rpcFactory.create(urlFor(buildAgent), "TeamCity Agent", 5000, false);

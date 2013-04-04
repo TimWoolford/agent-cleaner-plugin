@@ -18,4 +18,5 @@ public class AgentInfo {
     public DiskSpaceSummary getDiskSpaceSummary() {
         return diskSpaceSummary;
     }
+
 }
