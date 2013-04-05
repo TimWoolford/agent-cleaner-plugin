@@ -13,7 +13,15 @@ public class ResourceLocator {
         return jsp("agentDiskSpaceTab");
     }
 
+    public String progressBarJs() {
+        return javascript("jquery-ui-progressbar");
+    }
+
     private String jsp(String fileName) {
         return pluginDescriptor.getPluginResourcesPath(String.format("jsp/%s.jsp", fileName));
+    }
+
+    private String javascript(String fileName) {
+        return pluginDescriptor.getPluginResourcesPath(String.format("js/%s.js", fileName));
     }
 }

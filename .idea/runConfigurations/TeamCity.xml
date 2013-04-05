@@ -82,12 +82,12 @@
       </SHUTDOWN>
       <EnvironmentVariables>
         <option name="NAME" value="CATALINA_HOME" />
-        <option name="VALUE" value="%IDEA_RUN:TOMCAT_HOME%/Users/tim/Downloads/TeamCity" />
+        <option name="VALUE" value="%IDEA_RUN:TOMCAT_HOME%" />
         <option name="IS_PREDEFINED" value="false" />
       </EnvironmentVariables>
       <EnvironmentVariables>
         <option name="NAME" value="CATALINE_BASE" />
-        <option name="VALUE" value="%IDEA_RUN:TOMCAT_HOME%/Users/tim/Downloads/TeamCity" />
+        <option name="VALUE" value="%IDEA_RUN:TOMCAT_HOME%" />
         <option name="IS_PREDEFINED" value="false" />
       </EnvironmentVariables>
     </ConfigurationWrapper>
