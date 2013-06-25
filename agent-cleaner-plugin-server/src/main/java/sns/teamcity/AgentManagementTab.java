@@ -7,12 +7,12 @@ import jetbrains.buildServer.web.openapi.SimpleCustomTab;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-public class AgentDiskSpaceTab extends SimpleCustomTab {
+public class AgentManagementTab extends SimpleCustomTab {
 
     private final AgentProvider agentProvider;
 
-    public AgentDiskSpaceTab(ResourceLocator resourceLocator, PagePlaces pagePlaces, AgentProvider agentProvider) {
-        super(pagePlaces, PlaceId.AGENTS_TAB, "agentDiskSpace", resourceLocator.agentDiskSpaceTabJsp(), "Disk Space");
+    public AgentManagementTab(ResourceLocator resourceLocator, PagePlaces pagePlaces, AgentProvider agentProvider) {
+        super(pagePlaces, PlaceId.AGENTS_TAB, "agentManagement", resourceLocator.agentDiskSpaceTabJsp(), "Agent Management");
         addJsFile(resourceLocator.progressBarJs());
         this.agentProvider = agentProvider;
     }

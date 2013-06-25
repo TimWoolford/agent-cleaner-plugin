@@ -1,14 +1,14 @@
 <component name="libraryTable">
   <library name="Maven: org.jetbrains.teamcity:server-api:7.1.4">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/server-api.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/teamcity/devPackage/server-api.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/teamcity/server-api/7.1.4/server-api-7.1.4-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/teamcity/server-api/7.1.4/server-api-7.1.4-sources.jar!/" />
-      <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/src/openApi-source.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/teamcity/devPackage/src/openApi-source.jar!/" />
     </SOURCES>
   </library>
 </component>

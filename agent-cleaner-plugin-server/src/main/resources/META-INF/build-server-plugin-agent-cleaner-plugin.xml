@@ -2,10 +2,13 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans default-autowire="constructor">
 
-    <bean id="agentDiskspaceTab" class="sns.teamcity.AgentDiskSpaceTab" init-method="register"/>
+    <bean id="agentManagementTab" class="sns.teamcity.AgentManagementTab" init-method="register"/>
 
     <bean id="resourceLocator" class="sns.teamcity.ResourceLocator"/>
 
     <bean id="agentProvider" class="sns.teamcity.AgentProvider"/>
 
+    <bean id="agentManagementController" class="sns.teamcity.controller.AgentManagementController"/>
+
+    <bean id="agentController" class="sns.teamcity.controller.AgentController"/>
 </beans>

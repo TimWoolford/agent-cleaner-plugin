@@ -17,6 +17,8 @@
     <orderEntry type="module" module-name="agent-cleaner-plugin-server" />
     <orderEntry type="library" name="Maven: org.jetbrains.teamcity:server-api:7.1.4" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:14.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.9" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.9" level="project" />
   </component>
 </module>
 

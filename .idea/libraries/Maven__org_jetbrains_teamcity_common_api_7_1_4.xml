@@ -1,11 +1,9 @@
 <component name="libraryTable">
   <library name="Maven: org.jetbrains.teamcity:common-api:7.1.4">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/common-api.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/teamcity/devPackage/common-api.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/src/openApi-source.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

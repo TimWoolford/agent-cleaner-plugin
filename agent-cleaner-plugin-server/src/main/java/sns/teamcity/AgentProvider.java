@@ -35,9 +35,8 @@ public class AgentProvider {
 
             @Override
             public AgentInfo apply(SBuildAgent sBuildAgent) {
-                return new AgentInfo(sBuildAgent.getName(), rpc.diskSpaceSummary(sBuildAgent));
+                return new AgentInfo(sBuildAgent.getId(), sBuildAgent.getName(), rpc.diskSpaceSummary(sBuildAgent), sBuildAgent.isEnabled());
             }
         };
     }
-
 }

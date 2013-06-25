@@ -18,7 +18,7 @@ public class AgentComparators {
     }
 
     public Comparator<AgentInfo> forId(String sortId, Boolean sortAsc) {
-        return forMap(map, sortByName).apply(sortId);
+        return new Inverserator(forMap(map, sortByName).apply(sortId), sortAsc);
     }
 
     private static class SortByName implements Comparator<AgentInfo> {
@@ -32,6 +32,21 @@ public class AgentComparators {
         @Override
         public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
             return Long.valueOf(agentInfo.getDiskSpaceSummary().getPercentageUsed()).compareTo(agentInfo2.getDiskSpaceSummary().getPercentageUsed());
+        }
+    }
+
+    private static class Inverserator implements Comparator<AgentInfo> {
+        private final Comparator<AgentInfo> delegate;
+        private final int foo;
+
+        private Inverserator(Comparator<AgentInfo> delegate, Boolean inverse) {
+            this.delegate = delegate;
+            this.foo = inverse ? 1 : -1;
+        }
+
+        @Override
+        public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
+            return foo * delegate.compare(agentInfo, agentInfo2);
         }
     }
 }
