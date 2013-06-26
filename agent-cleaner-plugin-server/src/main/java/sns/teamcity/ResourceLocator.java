@@ -17,6 +17,10 @@ public class ResourceLocator {
         return javascript("jquery-ui-progressbar");
     }
 
+    public String agentManagementJs() {
+        return javascript("agentManagement");
+    }
+
     private String jsp(String fileName) {
         return pluginDescriptor.getPluginResourcesPath(String.format("jsp/%s.jsp", fileName));
     }

@@ -9,6 +9,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.9" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.9" level="project" />
     <orderEntry type="module" module-name="agent-cleaner-plugin-agent" />
     <orderEntry type="module" module-name="agent-cleaner-plugin-common" />
     <orderEntry type="library" name="Maven: org.jetbrains.teamcity:runtime-util:7.1.4" level="project" />
