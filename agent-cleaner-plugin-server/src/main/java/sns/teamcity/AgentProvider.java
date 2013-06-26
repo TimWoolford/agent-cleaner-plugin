@@ -22,20 +22,22 @@ public class AgentProvider {
         this.server = server;
         rpc = new RpcCaller();
         agentComparators = new AgentComparators();
+
+
     }
 
     public List<AgentInfo> getAgentInfos(String sortId, Boolean sortAsc) {
-        List<AgentInfo> agentInfos = transform(server.getBuildAgentManager().getRegisteredAgents(), toAgentInto());
+        List<AgentInfo> agentInfos = transform(server.getBuildAgentManager().getRegisteredAgents(), toAgentInfo());
 
         return Ordering.from(agentComparators.forId(sortId, sortAsc)).immutableSortedCopy(agentInfos);
     }
 
-    private Function<SBuildAgent, AgentInfo> toAgentInto() {
+    private Function<SBuildAgent, AgentInfo> toAgentInfo() {
         return new Function<SBuildAgent, AgentInfo>() {
 
             @Override
             public AgentInfo apply(SBuildAgent sBuildAgent) {
-                return new AgentInfo(sBuildAgent.getId(), sBuildAgent.getName(), rpc.diskSpaceSummary(sBuildAgent), sBuildAgent.isEnabled());
+                return new AgentInfo(sBuildAgent.getId(), sBuildAgent.getName(), rpc.diskSpaceSummary(sBuildAgent), sBuildAgent.isEnabled(), sBuildAgent.getStatusComment());
             }
         };
     }

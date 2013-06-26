@@ -21,8 +21,16 @@ public class ResourceLocator {
         return javascript("agentManagement");
     }
 
+    public String agentManagementCss() {
+        return css("agentManagement");
+    }
+
     private String jsp(String fileName) {
         return pluginDescriptor.getPluginResourcesPath(String.format("jsp/%s.jsp", fileName));
+    }
+
+    private String css(String fileName) {
+        return pluginDescriptor.getPluginResourcesPath(String.format("css/%s.css", fileName));
     }
 
     private String javascript(String fileName) {

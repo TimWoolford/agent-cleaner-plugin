@@ -10,5 +10,6 @@ public class AgentManagementTab extends SimpleCustomTab {
         super(pagePlaces, PlaceId.AGENTS_TAB, "agentManagement", resourceLocator.agentManagementTabJsp(), "Agent Management");
         addJsFile(resourceLocator.progressBarJs());
         addJsFile(resourceLocator.agentManagementJs());
+        addCssFile(resourceLocator.agentManagementCss());
     }
 }

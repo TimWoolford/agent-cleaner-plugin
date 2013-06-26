@@ -11,4 +11,6 @@
     <bean id="agentManagementController" class="sns.teamcity.controller.AgentManagementController"/>
 
     <bean id="agentController" class="sns.teamcity.controller.AgentController"/>
+
+    <bean id="lifecycle" class="sns.teamcity.AgentManagementLifecycle"/>
 </beans>

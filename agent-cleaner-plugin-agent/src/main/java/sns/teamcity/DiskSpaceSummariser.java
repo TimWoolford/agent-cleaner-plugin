@@ -1,11 +1,10 @@
 package sns.teamcity;
 
-import jetbrains.buildServer.agent.AgentLifeCycleAdapter;
 import jetbrains.buildServer.agent.BuildAgent;
 
 import java.util.Hashtable;
 
-public class DiskSpaceSummariser extends AgentLifeCycleAdapter {
+public class DiskSpaceSummariser {
 
     private final BuildAgent buildAgent;
 
