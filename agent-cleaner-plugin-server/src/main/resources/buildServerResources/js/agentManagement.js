@@ -43,18 +43,20 @@ function populateAgentTable(sortBy, sortAsc) {
 
                 $j('<td/>', { class: 'buildAgentName'}).append(agentLink).appendTo(row);
                 $j('<td/>', { class: 'buildAgentStatus', text: agent.status }).appendTo(row);
-                $j('<td/>', { class: 'percentage', text: agent.diskSpaceSummary.percentageUsed }).appendTo(row);
+                $j('<td/>', { class: 'percentage', text: agent.diskSpaceSummary.formattedPercentageUsed }).appendTo(row);
                 $j('<td/>', { class: 'freeSpace', text: agent.diskSpaceSummary.formattedFreeSpace }).appendTo(row);
             });
         }});
 }
 
 function prepareAgentList() {
-    $j('table.sortable > thead > tr > th > span.sortable').each(function () {
+    var sortableElements = $j('table.sortable > thead > tr > th > span.sortable');
+
+    sortableElements.each(function () {
         var element = $j(this);
         element.click(function() {
             populateAgentTable(element.attr('id'), !element.hasClass("sortedAsc"))
         })
     });
-    populateAgentTable(null, true);
+    populateAgentTable(sortableElements.first().attr('id'), true);
 }

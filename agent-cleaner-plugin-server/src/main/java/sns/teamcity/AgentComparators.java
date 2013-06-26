@@ -15,6 +15,7 @@ public class AgentComparators {
     public AgentComparators() {
         map.put("SORT_BY_NAME", sortByName);
         map.put("SORT_BY_PERCENTAGE", new SortByPercentage());
+        map.put("SORT_BY_FREE_SPACE", new SortByFreeSpace());
     }
 
     public Comparator<AgentInfo> forId(String sortId, Boolean sortAsc) {
@@ -31,22 +32,28 @@ public class AgentComparators {
     private static class SortByPercentage implements Comparator<AgentInfo> {
         @Override
         public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
-            return Long.valueOf(agentInfo.getDiskSpaceSummary().getPercentageUsed()).compareTo(agentInfo2.getDiskSpaceSummary().getPercentageUsed());
+            return Double.compare(agentInfo.getDiskSpaceSummary().getPercentageUsed(), agentInfo2.getDiskSpaceSummary().getPercentageUsed());
+        }
+    }
+
+    private static class SortByFreeSpace implements Comparator<AgentInfo> {
+        @Override
+        public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
+            return Long.valueOf(agentInfo.getDiskSpaceSummary().getFreeSpace()).compareTo(agentInfo2.getDiskSpaceSummary().getFreeSpace());
         }
     }
 
     private static class Inverserator implements Comparator<AgentInfo> {
         private final Comparator<AgentInfo> delegate;
-        private final int foo;
+        private final int inverser;
 
         private Inverserator(Comparator<AgentInfo> delegate, Boolean inverse) {
             this.delegate = delegate;
-            this.foo = inverse ? 1 : -1;
+            this.inverser = inverse ? 1 : -1;
         }
-
         @Override
         public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
-            return foo * delegate.compare(agentInfo, agentInfo2);
+            return inverser * delegate.compare(agentInfo, agentInfo2);
         }
     }
 }

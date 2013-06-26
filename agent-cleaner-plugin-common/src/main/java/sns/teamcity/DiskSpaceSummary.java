@@ -34,11 +34,19 @@ public class DiskSpaceSummary {
         };
     }
 
-    public long getPercentageUsed() {
-         return ((totalSpace - freeSpace) * 100) / totalSpace;
+    public long getFreeSpace() {
+        return freeSpace;
     }
 
     public String getFormattedFreeSpace() {
-        return String.format("%,.2f Mb", (double) freeSpace / (1024 * 1024));
+        return String.format("%,.2f Mb", ((double) freeSpace / (1024 * 1024)));
+    }
+
+    public double getPercentageUsed() {
+        return ((double) (totalSpace - freeSpace) * 100) / totalSpace;
+    }
+
+    public String getFormattedPercentageUsed() {
+        return String.format("%.1f%%", getPercentageUsed());
     }
 }

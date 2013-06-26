@@ -9,8 +9,8 @@ public class ResourceLocator {
         this.pluginDescriptor = pluginDescriptor;
     }
 
-    public String agentDiskSpaceTabJsp() {
-        return jsp("agentDiskSpaceTab");
+    public String agentManagementTabJsp() {
+        return jsp("agentManagementTab");
     }
 
     public String progressBarJs() {

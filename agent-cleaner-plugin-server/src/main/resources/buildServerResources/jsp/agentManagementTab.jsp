@@ -12,7 +12,7 @@
                 <th class="buildAgentName"><span id="SORT_BY_NAME" class="sortable">Agent Name</span></th>
                 <th class="buildAgentStatus"><span>Status</span></th>
                 <th class="percentage"><span id="SORT_BY_PERCENTAGE" class="sortable">Percentage Used</span></th>
-                <th class="freeSpace">Free Space</th>
+                <th class="freeSpace"><span id="SORT_BY_FREE_SPACE" class="sortable">Free Space</span></th>
             </tr>
             </thead>
             <tbody id="agentTableBody"/>
