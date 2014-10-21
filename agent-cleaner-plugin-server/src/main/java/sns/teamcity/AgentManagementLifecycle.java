@@ -11,8 +11,8 @@ public class AgentManagementLifecycle extends BuildServerAdapter {
 
     private RpcCaller rpcCaller;
 
-    public AgentManagementLifecycle(EventDispatcher<BuildServerListener> eventDispatcher) {
-        rpcCaller = new RpcCaller();
+    public AgentManagementLifecycle(EventDispatcher<BuildServerListener> eventDispatcher, RpcCaller rpcCaller) {
+        this.rpcCaller = rpcCaller;
         eventDispatcher.addListener(this);
     }
 

@@ -12,6 +12,8 @@
 
     <bean id="agentController" class="sns.teamcity.controller.AgentController"/>
 
+    <bean id="actionator" class="sns.teamcity.action.Actionactor"/>
+
     <bean id="lifecycle" class="sns.teamcity.AgentManagementLifecycle"/>
 
     <bean id="agentRpcCaller" class="sns.teamcity.rpc.RpcCaller"/>

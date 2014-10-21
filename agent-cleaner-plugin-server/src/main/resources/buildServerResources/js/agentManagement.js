@@ -35,9 +35,7 @@ function commentTooltip(agent) {
     } else {
         return $j('<span/>');
     }
-
 }
-
 
 function populateAgentTable(sortBy, sortAsc) {
     $j.ajax({

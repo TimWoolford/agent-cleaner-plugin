@@ -8,6 +8,8 @@ import jetbrains.buildServer.users.SUser;
 import jetbrains.buildServer.web.openapi.WebControllerManager;
 import jetbrains.buildServer.web.util.SessionUser;
 import org.springframework.web.servlet.ModelAndView;
+import sns.teamcity.action.Action;
+import sns.teamcity.action.Actionactor;
 import sns.teamcity.rpc.RpcCaller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,48 +18,22 @@ import java.util.List;
 
 public class AgentManagementController extends BaseController {
 
-    private static final String DISABLED_BY_PLUGIN_COMMENT = "Disabled by plugin";
-    private final BuildAgentManager buildAgentManager;
-    private final RpcCaller rpcCaller;
+    private final Actionactor actionactor;
 
-    public AgentManagementController(SBuildServer buildServer,
-                                     WebControllerManager webControllerManager,
-                                     RpcCaller rpcCaller) {
-        this.rpcCaller = rpcCaller;
-        buildAgentManager = buildServer.getBuildAgentManager();
+    public AgentManagementController(WebControllerManager webControllerManager, Actionactor actionactor) {
         webControllerManager.registerController("/agentManagement/action/", this);
+        this.actionactor = actionactor;
     }
 
     @Override
     protected ModelAndView doHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<SBuildAgent> registeredAgents = buildAgentManager.getRegisteredAgents();
         SUser user = SessionUser.getUser(request);
-        String action = request.getParameter("action");
+        Action action = Action.valueOf(request.getParameter("action"));
+        Integer agentId = Integer.valueOf(request.getParameter("agentId"));
 
-        if ("disable".equals(action)) {
-            for (SBuildAgent registeredAgent : registeredAgents) {
-                if (registeredAgent.isEnabled()) {
-                    registeredAgent.setEnabled(false, user, DISABLED_BY_PLUGIN_COMMENT);
-                }
-            }
-        } else if ("enable".equals(action)) {
-            for (SBuildAgent registeredAgent : registeredAgents) {
-                if (!registeredAgent.isEnabled() && wasDisabledByPlugin(registeredAgent)) {
-                    registeredAgent.setEnabled(true, user, "");
-                }
-            }
-        } else if ("rebuild".equals(action)) {
-            SBuildAgent agent = buildAgentManager.findAgentById(Integer.valueOf(request.getParameter("agentId")), false);
-            rpcCaller.rebuildAgent(agent);
-        } else {
-            throw new UnsupportedOperationException(String.format("Action [%s] not supported.", action));
-        }
+        actionactor.doAction(action, user, agentId);
 
         return simpleView("OK");
     }
 
-    private boolean wasDisabledByPlugin(SBuildAgent registeredAgent) {
-        String comment = registeredAgent.getStatusComment().getComment();
-        return comment != null && comment.equals(DISABLED_BY_PLUGIN_COMMENT);
-    }
 }
