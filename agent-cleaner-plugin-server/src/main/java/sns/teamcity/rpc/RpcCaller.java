@@ -8,6 +8,7 @@ import sns.teamcity.DiskSpaceSummary;
 import java.util.Hashtable;
 
 import static sns.teamcity.rpc.Handlers.AgentDiskSpace;
+import static sns.teamcity.rpc.Handlers.RebuildAgent;
 
 public class RpcCaller {
     private final XmlRpcFactory rpcFactory;
@@ -24,5 +25,9 @@ public class RpcCaller {
 
     private String urlFor(SBuildAgent buildAgent) {
         return String.format("http://%s:%d", buildAgent.getHostAddress(), buildAgent.getPort());
+    }
+
+    public void rebuildAgent(SBuildAgent agent) {
+        rpcFactory.create(urlFor(agent), "TeamCity Agent", 2000, false).call(RebuildAgent.method("rebuild"), new Object[]{});
     }
 }

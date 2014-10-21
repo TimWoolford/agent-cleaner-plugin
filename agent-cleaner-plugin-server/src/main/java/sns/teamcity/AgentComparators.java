@@ -1,25 +1,29 @@
 package sns.teamcity;
 
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableMap;
 import sns.teamcity.model.AgentInfo;
 
 import java.util.Comparator;
-import java.util.Map;
 
 import static com.google.common.base.Functions.forMap;
-import static com.google.common.collect.Maps.newHashMap;
 
 public class AgentComparators {
-    private final Map<String, Comparator<AgentInfo>> map = newHashMap();
-    private final SortByName sortByName = new SortByName();
+    private final Function<String, Comparator<AgentInfo>> comparatorFunction;
 
     public AgentComparators() {
-        map.put("SORT_BY_NAME", sortByName);
-        map.put("SORT_BY_PERCENTAGE", new SortByPercentage());
-        map.put("SORT_BY_FREE_SPACE", new SortByFreeSpace());
+        comparatorFunction = forMap(
+                ImmutableMap.of(
+                        "SORT_BY_PERCENTAGE", new SortByPercentage(),
+                        "SORT_BY_FREE_SPACE", new SortByFreeSpace(),
+                        "SORT_BY_UPTIME", new SortByUptime()
+                ),
+                new SortByName()
+        );
     }
 
     public Comparator<AgentInfo> forId(String sortId, Boolean sortAsc) {
-        return new Inverserator(forMap(map, sortByName).apply(sortId), sortAsc);
+        return new Inverserator(comparatorFunction.apply(sortId), sortAsc);
     }
 
     private static class SortByName implements Comparator<AgentInfo> {
@@ -33,6 +37,13 @@ public class AgentComparators {
         @Override
         public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
             return Double.compare(agentInfo.getDiskSpaceSummary().getPercentageUsed(), agentInfo2.getDiskSpaceSummary().getPercentageUsed());
+        }
+    }
+
+    private static class SortByUptime implements Comparator<AgentInfo> {
+        @Override
+        public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
+            return Double.compare(agentInfo.getUptime(), agentInfo2.getUptime());
         }
     }
 
@@ -51,6 +62,7 @@ public class AgentComparators {
             this.delegate = delegate;
             this.inverser = inverse ? 1 : -1;
         }
+
         @Override
         public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
             return inverser * delegate.compare(agentInfo, agentInfo2);

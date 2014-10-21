@@ -1,6 +1,7 @@
 package sns.teamcity;
 
 import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Ordering;
 import jetbrains.buildServer.serverSide.SBuildAgent;
 import jetbrains.buildServer.serverSide.SBuildServer;
@@ -9,25 +10,19 @@ import sns.teamcity.rpc.RpcCaller;
 
 import java.util.List;
 
-import static com.google.common.base.Functions.forMap;
-import static com.google.common.collect.Lists.transform;
-import static com.google.common.collect.Maps.newHashMap;
-
 public class AgentProvider {
     private final SBuildServer server;
     private final RpcCaller rpc;
     private final AgentComparators agentComparators;
 
-    public AgentProvider(SBuildServer server) {
+    public AgentProvider(SBuildServer server, RpcCaller rpcCaller) {
         this.server = server;
-        rpc = new RpcCaller();
-        agentComparators = new AgentComparators();
-
-
+        this.rpc = rpcCaller;
+        this.agentComparators = new AgentComparators();
     }
 
     public List<AgentInfo> getAgentInfos(String sortId, Boolean sortAsc) {
-        List<AgentInfo> agentInfos = transform(server.getBuildAgentManager().getRegisteredAgents(), toAgentInfo());
+        List<AgentInfo> agentInfos = FluentIterable.from(server.getBuildAgentManager().getRegisteredAgents()).transform(toAgentInfo()).toList();
 
         return Ordering.from(agentComparators.forId(sortId, sortAsc)).immutableSortedCopy(agentInfos);
     }
@@ -37,7 +32,7 @@ public class AgentProvider {
 
             @Override
             public AgentInfo apply(SBuildAgent sBuildAgent) {
-                return new AgentInfo(sBuildAgent.getId(), sBuildAgent.getName(), rpc.diskSpaceSummary(sBuildAgent), sBuildAgent.isEnabled(), sBuildAgent.getStatusComment());
+                return new AgentInfo(sBuildAgent.getId(), sBuildAgent.getName(), rpc.diskSpaceSummary(sBuildAgent), sBuildAgent.isEnabled(), sBuildAgent.getStatusComment(), sBuildAgent.getRegistrationTimestamp());
             }
         };
     }

@@ -13,4 +13,6 @@
     <bean id="agentController" class="sns.teamcity.controller.AgentController"/>
 
     <bean id="lifecycle" class="sns.teamcity.AgentManagementLifecycle"/>
+
+    <bean id="agentRpcCaller" class="sns.teamcity.rpc.RpcCaller"/>
 </beans>

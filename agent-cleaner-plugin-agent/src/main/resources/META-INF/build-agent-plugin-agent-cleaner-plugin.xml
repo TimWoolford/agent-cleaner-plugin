@@ -5,5 +5,7 @@
 <beans default-autowire="constructor">
     <bean id="diskSpaceSummariser" class="sns.teamcity.DiskSpaceSummariser"/>
 
+    <bean id="agentRebuilder" class="sns.teamcity.AgentRebuilder"/>
+
     <bean id="lifecycle" class="sns.teamcity.AgentCleanerPluginAgentLifecycle"/>
 </beans>

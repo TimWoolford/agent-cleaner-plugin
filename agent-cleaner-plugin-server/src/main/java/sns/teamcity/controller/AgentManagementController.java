@@ -8,6 +8,7 @@ import jetbrains.buildServer.users.SUser;
 import jetbrains.buildServer.web.openapi.WebControllerManager;
 import jetbrains.buildServer.web.util.SessionUser;
 import org.springframework.web.servlet.ModelAndView;
+import sns.teamcity.rpc.RpcCaller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,13 +17,15 @@ import java.util.List;
 public class AgentManagementController extends BaseController {
 
     private static final String DISABLED_BY_PLUGIN_COMMENT = "Disabled by plugin";
-    private BuildAgentManager buildAgentManager;
+    private final BuildAgentManager buildAgentManager;
+    private final RpcCaller rpcCaller;
 
     public AgentManagementController(SBuildServer buildServer,
-                                     WebControllerManager webControllerManager) {
+                                     WebControllerManager webControllerManager,
+                                     RpcCaller rpcCaller) {
+        this.rpcCaller = rpcCaller;
         buildAgentManager = buildServer.getBuildAgentManager();
         webControllerManager.registerController("/agentManagement/action/", this);
-
     }
 
     @Override
@@ -43,6 +46,9 @@ public class AgentManagementController extends BaseController {
                     registeredAgent.setEnabled(true, user, "");
                 }
             }
+        } else if ("rebuild".equals(action)) {
+            SBuildAgent agent = buildAgentManager.findAgentById(Integer.valueOf(request.getParameter("agentId")), false);
+            rpcCaller.rebuildAgent(agent);
         } else {
             throw new UnsupportedOperationException(String.format("Action [%s] not supported.", action));
         }

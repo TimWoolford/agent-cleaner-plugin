@@ -13,6 +13,8 @@
                 <th class="buildAgentStatus"><span>Status</span></th>
                 <th class="percentage"><span id="SORT_BY_PERCENTAGE" class="sortable">Percentage Used</span></th>
                 <th class="freeSpace"><span id="SORT_BY_FREE_SPACE" class="sortable">Free Space</span></th>
+                <th class="uptime"><span id="SORT_BY_UPTIME" class="sortable">Uptime</span></th>
+                <th class="rebuild"><span class="unsortable">Rebuild</span></th>
             </tr>
             </thead>
             <tbody id="agentTableBody"/>
