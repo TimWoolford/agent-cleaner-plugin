@@ -21,7 +21,7 @@ function updateTableHeaders(sortBy, sortAsc) {
 }
 
 function commentTooltip(agent) {
-    if( agent.statusComment ) {
+    if (agent.statusComment) {
         return $j('<img/>', {class: 'commentIcon', src: '/img/commentIcon.gif', width: "11px", height: "11px"})
                 .mouseover(function (event) {
                     $j('<div/>', {id: 'statusTooltip', class: 'statusTooltip', text: agent.statusComment})
@@ -68,12 +68,25 @@ function populateAgentTable(sortBy, sortAsc) {
                 $j('<td/>', { class: 'freeSpace', text: agent.diskSpaceSummary.formattedFreeSpace }).appendTo(row);
                 $j('<td/>', { class: 'uptime', text: agent.formattedUptime }).appendTo(row);
 
-                var rebuild = $j('<td/>', { class: 'rebuild' } );
-                rebuild.append($j('<input/>', { type: 'submit', value:'Rebuild'}).click(function() { doAction('rebuild', agent.id) }));
+                var rebuild = $j('<td/>', { class: 'rebuild' }).append(rebuildButtonFor(agent));
 
                 rebuild.appendTo(row);
             });
         }});
+}
+
+function rebuildButtonFor(agent) {
+    if (agent.hasPendingRebuild) {
+        return $j('<input/>', { type: 'submit', value: 'Cancel'})
+                .click(function () {
+                    doAction('cancelRebuild', agent.id)
+                });
+    } else {
+        return $j('<input/>', { type: 'submit', value: 'Rebuild'})
+                .click(function () {
+                    doAction('rebuild', agent.id)
+                });
+    }
 }
 
 function prepareAgentList() {

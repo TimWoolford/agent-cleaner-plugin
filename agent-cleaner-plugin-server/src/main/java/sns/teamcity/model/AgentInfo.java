@@ -46,7 +46,7 @@ public class AgentInfo {
         return statusComment;
     }
 
-    public boolean hasPendingRebuild() {
+    public boolean getHasPendingRebuild() {
         return hasPendingRebuild;
     }
 

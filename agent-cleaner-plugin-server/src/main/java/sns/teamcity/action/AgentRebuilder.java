@@ -53,7 +53,11 @@ public class AgentRebuilder extends BuildServerAdapter {
     }
 
     public void cancel(SBuildAgent agent, SUser user) {
-
+        Optional<SBuildAgent> optionalAgent = optionalAgent(agent);
+        if (optionalAgent.isPresent() && rpcCaller.cancelRebuild(agent)) {
+            agentDisabler.enable(agent, user);
+            rebuildingAgents.remove(optionalAgent.get());
+        }
     }
 
     public boolean hasPendingRebuild(SBuildAgent agent) {

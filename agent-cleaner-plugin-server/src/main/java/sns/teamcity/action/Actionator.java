@@ -34,6 +34,9 @@ public class Actionator {
             case rebuild:
                 agentRebuilder.rebuild(buildAgentManager.findAgentById(agentId, false), user);
                 break;
+            case cancelRebuild:
+                agentRebuilder.cancel(buildAgentManager.findAgentById(agentId, false), user);
+                break;
         }
     }
 }

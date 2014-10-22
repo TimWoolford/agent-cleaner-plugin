@@ -23,11 +23,17 @@ public class RpcCaller {
         return new DiskSpaceSummary((Hashtable<String, String>) xmlRpcTarget.call(AgentDiskSpace.method("diskSpaceSummary"), new Object[]{}));
     }
 
-    private String urlFor(SBuildAgent buildAgent) {
-        return String.format("http://%s:%d", buildAgent.getHostAddress(), buildAgent.getPort());
-    }
-
     public void rebuildAgent(SBuildAgent agent) {
         rpcFactory.create(urlFor(agent), "TeamCity Agent", 2000, false).call(RebuildAgent.method("rebuild"), new Object[]{});
+    }
+
+    public boolean cancelRebuild(SBuildAgent agent) {
+        XmlRpcTarget xmlRpcTarget = rpcFactory.create(urlFor(agent), "TeamCity Agent", 2000, false);
+        Hashtable<String, String> hashtable = (Hashtable<String, String>) xmlRpcTarget.call(RebuildAgent.method("cancel"), new Object[]{});
+        return Boolean.valueOf(hashtable.get("success"));
+    }
+
+    private String urlFor(SBuildAgent buildAgent) {
+        return String.format("http://%s:%d", buildAgent.getHostAddress(), buildAgent.getPort());
     }
 }

@@ -42,7 +42,8 @@ public class AgentProvider {
                         sBuildAgent.isEnabled(),
                         sBuildAgent.getStatusComment(),
                         sBuildAgent.getRegistrationTimestamp(),
-                        agentRebuilder.hasPendingRebuild(sBuildAgent));
+                        agentRebuilder.hasPendingRebuild(sBuildAgent)
+                );
             }
         };
     }
