@@ -12,7 +12,9 @@
 
     <bean id="agentController" class="sns.teamcity.controller.AgentController"/>
 
-    <bean id="actionator" class="sns.teamcity.action.Actionactor"/>
+    <bean id="rebuildAction" class="sns.teamcity.action.AgentRebuilder"/>
+
+    <bean id="actionator" class="sns.teamcity.action.Actionator"/>
 
     <bean id="lifecycle" class="sns.teamcity.AgentManagementLifecycle"/>
 

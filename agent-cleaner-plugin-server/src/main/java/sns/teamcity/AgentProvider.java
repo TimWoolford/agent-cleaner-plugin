@@ -5,6 +5,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Ordering;
 import jetbrains.buildServer.serverSide.SBuildAgent;
 import jetbrains.buildServer.serverSide.SBuildServer;
+import sns.teamcity.action.AgentRebuilder;
 import sns.teamcity.model.AgentInfo;
 import sns.teamcity.rpc.RpcCaller;
 
@@ -13,11 +14,13 @@ import java.util.List;
 public class AgentProvider {
     private final SBuildServer server;
     private final RpcCaller rpc;
+    private final AgentRebuilder agentRebuilder;
     private final AgentComparators agentComparators;
 
-    public AgentProvider(SBuildServer server, RpcCaller rpcCaller) {
+    public AgentProvider(SBuildServer server, RpcCaller rpcCaller, AgentRebuilder agentRebuilder) {
         this.server = server;
         this.rpc = rpcCaller;
+        this.agentRebuilder = agentRebuilder;
         this.agentComparators = new AgentComparators();
     }
 
@@ -32,7 +35,14 @@ public class AgentProvider {
 
             @Override
             public AgentInfo apply(SBuildAgent sBuildAgent) {
-                return new AgentInfo(sBuildAgent.getId(), sBuildAgent.getName(), rpc.diskSpaceSummary(sBuildAgent), sBuildAgent.isEnabled(), sBuildAgent.getStatusComment(), sBuildAgent.getRegistrationTimestamp());
+                return new AgentInfo(
+                        sBuildAgent.getId(),
+                        sBuildAgent.getName(),
+                        rpc.diskSpaceSummary(sBuildAgent),
+                        sBuildAgent.isEnabled(),
+                        sBuildAgent.getStatusComment(),
+                        sBuildAgent.getRegistrationTimestamp(),
+                        agentRebuilder.hasPendingRebuild(sBuildAgent));
             }
         };
     }
