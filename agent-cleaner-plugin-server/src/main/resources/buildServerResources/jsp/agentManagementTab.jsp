@@ -10,12 +10,12 @@
             <thead>
             <tr>
                 <th class="buildAgentName"><span id="SORT_BY_NAME" class="sortable">Agent Name</span></th>
-                <th class="buildAgentStatus"><span>Status</span></th>
+                <th class="buildAgentStatus"><span id="SORT_BY_STATUS" class="sortable">Status</span></th>
+                <th class="uptime"><span id="SORT_BY_UPTIME" class="sortable">Uptime</span></th>
                 <th class="percentage"><span id="SORT_BY_PERCENTAGE" class="sortable">Percentage Used</span></th>
                 <th class="freeSpace"><span id="SORT_BY_FREE_SPACE" class="sortable">Free Space</span></th>
-                <th class="uptime"><span id="SORT_BY_UPTIME" class="sortable">Uptime</span></th>
+                <th class="cleanup"><span>Cleanup</span></th>
                 <th class="rebuild"><span id="SORT_BY_PENDING_REBUILD" class="sortable">Rebuild</span></th>
-                <th class="clean"><span class="unsortable">Cleanup</span></th>
             </tr>
             </thead>
             <tbody id="agentTableBody"/>

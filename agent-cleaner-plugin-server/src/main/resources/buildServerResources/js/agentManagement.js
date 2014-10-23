@@ -84,6 +84,9 @@ function populateAgentTable(sortBy, sortAsc) {
                         .append(commentTooltip(agent))
                         .appendTo(row);
 
+                $j('<td/>', { class: 'uptime', text: agent.formattedUptime })
+                        .appendTo(row);
+
                 $j('<td/>', { class: 'percentage', text: agent.diskSpaceSummary.formattedPercentageUsed })
                         .appendTo(row);
 
@@ -91,16 +94,14 @@ function populateAgentTable(sortBy, sortAsc) {
                         .append(usage(agent))
                         .appendTo(row);
 
-                $j('<td/>', { class: 'uptime', text: agent.formattedUptime })
+                $j('<td nowrap/>', { class: 'cleanup'})
+                        .append(cleanupButtonsFor(agent))
                         .appendTo(row);
 
                 $j('<td/>', { class: 'rebuild' })
                         .append(rebuildButtonFor(agent))
                         .appendTo(row);
 
-                $j('<td nowrap/>', { class: 'cleanup'})
-                        .append(cleanupButtonsFor(agent))
-                        .appendTo(row);
             });
         }});
 }

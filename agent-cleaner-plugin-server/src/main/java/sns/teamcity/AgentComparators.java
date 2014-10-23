@@ -17,7 +17,8 @@ public class AgentComparators {
                         "SORT_BY_PERCENTAGE", new SortByPercentage(),
                         "SORT_BY_FREE_SPACE", new SortByFreeSpace(),
                         "SORT_BY_UPTIME", new SortByUptime(),
-                        "SORT_BY_PENDING_REBUILD", new PendingRebuildComparator()
+                        "SORT_BY_PENDING_REBUILD", new SortByPendingRebuild(),
+                        "SORT_BY_STATUS", new SortByStatus()
                 ),
                 new SortByName()
         );
@@ -55,7 +56,7 @@ public class AgentComparators {
         }
     }
 
-    private static class PendingRebuildComparator implements Comparator<AgentInfo> {
+    private static class SortByPendingRebuild implements Comparator<AgentInfo> {
         @Override
         public int compare(AgentInfo o1, AgentInfo o2) {
             return Boolean.compare(o1.getHasPendingRebuild(), o2.getHasPendingRebuild());
@@ -74,6 +75,13 @@ public class AgentComparators {
         @Override
         public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
             return inverser * delegate.compare(agentInfo, agentInfo2);
+        }
+    }
+
+    private static class SortByStatus implements Comparator<AgentInfo> {
+        @Override
+        public int compare(AgentInfo o1, AgentInfo o2) {
+            return o1.getStatus().compareTo(o2.getStatus());
         }
     }
 }

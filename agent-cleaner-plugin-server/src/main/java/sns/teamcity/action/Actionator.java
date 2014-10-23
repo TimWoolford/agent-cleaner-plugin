@@ -35,17 +35,21 @@ public class Actionator {
                 }
                 break;
             case rebuild:
-                agentRebuilder.rebuild(buildAgentManager.findAgentById(agentId, false), user);
+                agentRebuilder.rebuild(agentWith(agentId), user);
                 break;
             case cancelRebuild:
-                agentRebuilder.cancel(buildAgentManager.findAgentById(agentId, false), user);
+                agentRebuilder.cancel(agentWith(agentId), user);
                 break;
             case cleanAppDirs:
-                rpcCaller.cleanAppDirs(buildAgentManager.findAgentById(agentId, false));
+                rpcCaller.cleanAppDirs(agentWith(agentId));
                 break;
             case cleanMavenRepo:
-                rpcCaller.cleanMavenRepo(buildAgentManager.findAgentById(agentId, false));
+                rpcCaller.cleanMavenRepo(agentWith(agentId));
                 break;
         }
+    }
+
+    private SBuildAgent agentWith(Integer agentId) {
+        return buildAgentManager.findAgentById(agentId, false);
     }
 }
