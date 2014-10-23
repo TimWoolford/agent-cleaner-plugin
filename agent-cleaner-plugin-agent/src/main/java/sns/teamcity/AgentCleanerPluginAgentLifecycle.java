@@ -5,17 +5,20 @@ import jetbrains.buildServer.agent.AgentLifeCycleListener;
 import jetbrains.buildServer.agent.BuildAgent;
 import jetbrains.buildServer.util.EventDispatcher;
 
-import static sns.teamcity.rpc.Handlers.AgentDiskSpace;
-import static sns.teamcity.rpc.Handlers.RebuildAgent;
+import static sns.teamcity.rpc.Handler.*;
 
 public class AgentCleanerPluginAgentLifecycle extends AgentLifeCycleAdapter {
 
     private final DiskSpaceSummariser diskSpaceSummariser;
     private final AgentRebuilder agentRebuilder;
+    private final AgentCleaner agentCleaner;
+    private final DiskUsageProvider diskUsageProvider;
 
-    public AgentCleanerPluginAgentLifecycle(EventDispatcher<AgentLifeCycleListener> eventDispatcher, DiskSpaceSummariser diskSpaceSummariser, AgentRebuilder agentRebuilder) {
+    public AgentCleanerPluginAgentLifecycle(EventDispatcher<AgentLifeCycleListener> eventDispatcher, DiskSpaceSummariser diskSpaceSummariser, AgentRebuilder agentRebuilder, AgentCleaner agentCleaner, DiskUsageProvider diskUsageProvider) {
         this.diskSpaceSummariser = diskSpaceSummariser;
         this.agentRebuilder = agentRebuilder;
+        this.agentCleaner = agentCleaner;
+        this.diskUsageProvider = diskUsageProvider;
         eventDispatcher.addListener(this);
     }
 
@@ -23,5 +26,7 @@ public class AgentCleanerPluginAgentLifecycle extends AgentLifeCycleAdapter {
     public void agentStarted(BuildAgent agent) {
         agent.getXmlRpcHandlerManager().addHandler(AgentDiskSpace.id(), diskSpaceSummariser);
         agent.getXmlRpcHandlerManager().addHandler(RebuildAgent.id(), agentRebuilder);
+        agent.getXmlRpcHandlerManager().addHandler(CleanAgent.id(), agentCleaner);
+        agent.getXmlRpcHandlerManager().addHandler(DiskUsage.id(), diskUsageProvider);
     }
 }

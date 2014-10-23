@@ -4,5 +4,8 @@ public enum Action {
     enable,
     disable,
     rebuild,
-    cancelRebuild
+    cancelRebuild,
+    cleanAppDirs,
+    cleanMavenRepo,
+    ;
 }

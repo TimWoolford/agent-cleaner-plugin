@@ -26,7 +26,7 @@ public class AgentInfoTest {
     }
 
     private AgentInfo agentInfo(Date registrationDate) {
-        return new AgentInfo(1, "name", null, true, new MyComment("comment"), registrationDate, false);
+        return new AgentInfo(1, "name", null, true, new MyComment("comment"), registrationDate, false, null);
     }
 
 

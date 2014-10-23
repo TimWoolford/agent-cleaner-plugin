@@ -2,6 +2,7 @@ package sns.teamcity.model;
 
 import jetbrains.buildServer.serverSide.comments.Comment;
 import sns.teamcity.DiskSpaceSummary;
+import sns.teamcity.DiskUsage;
 
 import java.util.Date;
 
@@ -13,15 +14,17 @@ public class AgentInfo {
     private final DiskSpaceSummary diskSpaceSummary;
     private final Date registrationDate;
     private final boolean hasPendingRebuild;
+    private final DiskUsage diskUsage;
     private final String status;
     private final String statusComment;
 
-    public AgentInfo(int id, String name, DiskSpaceSummary diskSpaceSummary, boolean isEnabled, Comment statusComment, Date registrationDate, boolean hasPendingRebuild) {
+    public AgentInfo(int id, String name, DiskSpaceSummary diskSpaceSummary, boolean isEnabled, Comment statusComment, Date registrationDate, boolean hasPendingRebuild, DiskUsage diskUsage) {
         this.id = id;
         this.name = name;
         this.diskSpaceSummary = diskSpaceSummary;
         this.registrationDate = registrationDate;
         this.hasPendingRebuild = hasPendingRebuild;
+        this.diskUsage = diskUsage;
         this.status = isEnabled ? "Enabled" : "Disabled";
         this.statusComment = statusComment.getComment();
     }
@@ -36,6 +39,10 @@ public class AgentInfo {
 
     public DiskSpaceSummary getDiskSpaceSummary() {
         return diskSpaceSummary;
+    }
+
+    public DiskUsage getDiskUsage() {
+        return diskUsage;
     }
 
     public String getStatus() {

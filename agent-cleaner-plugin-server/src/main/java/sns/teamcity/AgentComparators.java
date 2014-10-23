@@ -16,7 +16,8 @@ public class AgentComparators {
                 ImmutableMap.of(
                         "SORT_BY_PERCENTAGE", new SortByPercentage(),
                         "SORT_BY_FREE_SPACE", new SortByFreeSpace(),
-                        "SORT_BY_UPTIME", new SortByUptime()
+                        "SORT_BY_UPTIME", new SortByUptime(),
+                        "SORT_BY_PENDING_REBUILD", new PendingRebuildComparator()
                 ),
                 new SortByName()
         );
@@ -51,6 +52,13 @@ public class AgentComparators {
         @Override
         public int compare(AgentInfo agentInfo, AgentInfo agentInfo2) {
             return Long.valueOf(agentInfo.getDiskSpaceSummary().getFreeSpace()).compareTo(agentInfo2.getDiskSpaceSummary().getFreeSpace());
+        }
+    }
+
+    private static class PendingRebuildComparator implements Comparator<AgentInfo> {
+        @Override
+        public int compare(AgentInfo o1, AgentInfo o2) {
+            return Boolean.compare(o1.getHasPendingRebuild(), o2.getHasPendingRebuild());
         }
     }
 

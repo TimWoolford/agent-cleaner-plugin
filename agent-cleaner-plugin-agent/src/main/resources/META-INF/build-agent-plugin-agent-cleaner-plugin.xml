@@ -7,5 +7,11 @@
 
     <bean id="agentRebuilder" class="sns.teamcity.AgentRebuilder"/>
 
+    <bean id="directoryLocator" class="sns.teamcity.DirectoryLocator"/>
+
+    <bean id="agentCleaner" class="sns.teamcity.AgentCleaner"/>
+
+    <bean id="diskUsageProvider" class="sns.teamcity.DiskUsageProvider"/>
+
     <bean id="lifecycle" class="sns.teamcity.AgentCleanerPluginAgentLifecycle"/>
 </beans>

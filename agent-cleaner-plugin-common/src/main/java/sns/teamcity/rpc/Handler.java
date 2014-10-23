@@ -1,8 +1,10 @@
 package sns.teamcity.rpc;
 
-public enum Handlers {
+public enum Handler {
     AgentDiskSpace,
     RebuildAgent,
+    CleanAgent,
+    DiskUsage,
     FullDiskPanic;
 
     public String id() {

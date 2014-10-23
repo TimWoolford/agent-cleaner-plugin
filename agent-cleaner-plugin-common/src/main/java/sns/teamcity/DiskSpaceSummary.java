@@ -3,6 +3,8 @@ package sns.teamcity;
 import java.io.File;
 import java.util.Hashtable;
 
+import static sns.teamcity.Formatter.formatDiskSpace;
+
 public class DiskSpaceSummary {
     private static final String TOTAL_SPACE = "totalSpace";
     private static final String FREE_SPACE = "freeSpace";
@@ -39,7 +41,7 @@ public class DiskSpaceSummary {
     }
 
     public String getFormattedFreeSpace() {
-        return String.format("%,.2f Mb", ((double) freeSpace / (1024 * 1024)));
+        return formatDiskSpace(freeSpace);
     }
 
     public double getPercentageUsed() {
