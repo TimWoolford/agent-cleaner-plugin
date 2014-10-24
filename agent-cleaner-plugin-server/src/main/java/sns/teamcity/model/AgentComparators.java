@@ -1,4 +1,4 @@
-package sns.teamcity;
+package sns.teamcity.model;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;

@@ -10,6 +10,67 @@ function doAction(action, agentId) {
     );
 }
 
+function populateAgentTable(sortBy, sortAsc) {
+    $j.ajax({
+        type: 'GET',
+        url: '/agentManagement/agents/',
+        dataType: 'json',
+        data: {
+            'sortBy': sortBy,
+            'sortAsc': sortAsc
+        },
+        success: function (agents) {
+
+            updateTableHeaders(sortBy, sortAsc);
+
+            var tableBody = $j('#agentTableBody');
+            tableBody.empty();
+
+            agents.forEach(function (agent) {
+                var row = $j('<tr/>').appendTo(tableBody);
+
+                $j('<td/>', { class: 'buildAgentName ' + agent.runningBuildStatus})
+                        .append($j('<a/>', {href: '/agentDetails.html?id=' + agent.id, text: agent.name}))
+                        .appendTo(row);
+
+                $j('<td/>', { class: 'buildAgentStatus ' + agent.status.toLowerCase(), text: agent.status})
+                        .append(commentTooltip(agent))
+                        .appendTo(row);
+
+                $j('<td/>', { class: 'uptime', text: agent.formattedUptime })
+                        .appendTo(row);
+
+                $j('<td/>', { class: 'percentage', text: agent.diskSpaceSummary.formattedPercentageUsed })
+                        .appendTo(row);
+
+                $j('<td/>', { class: 'freeSpace', text: agent.diskSpaceSummary.formattedFreeSpace })
+                        .append(usage(agent))
+                        .appendTo(row);
+
+                $j('<td/>', { class: 'cleanup'})
+                        .append(cleanupButtonsFor(agent))
+                        .appendTo(row);
+
+                $j('<td/>', { class: 'rebuild' })
+                        .append(rebuildButtonFor(agent))
+                        .appendTo(row);
+
+            });
+        }});
+}
+
+function prepareAgentList() {
+    var sortableElements = $j('table.sortable > thead > tr > th > span.sortable');
+
+    sortableElements.each(function () {
+        var element = $j(this);
+        element.click(function () {
+            populateAgentTable(element.attr('id'), !element.hasClass("sortedAsc"))
+        })
+    });
+    populateAgentTable(sortableElements.first().attr('id'), true);
+}
+
 function updateTableHeaders(sortBy, sortAsc) {
     $j('table.sortable > thead > tr > th > span.sortable').each(function () {
         var element = $j(this);
@@ -20,18 +81,43 @@ function updateTableHeaders(sortBy, sortAsc) {
     });
 }
 
+function rebuildButtonFor(agent) {
+    if (agent.hasPendingRebuild) {
+        return button(agent, 'cancelRebuild', 'Cancel');
+    } else {
+        return button(agent, 'rebuild', 'Rebuild');
+    }
+}
+
+function cleanupButtonsFor(agent) {
+    var span = $j('<span/>');
+    var buildStatus = agent.runningBuildStatus;
+    span.append(button(agent, 'cleanAppDirs', 'App Dirs', buildStatus != 'no-build').addClass(buildStatus));
+    span.append(button(agent, 'cleanMavenRepo', 'Maven Repo', buildStatus != 'no-build').addClass(buildStatus));
+    return span;
+}
+
+function button(agent, action, value, disabled) {
+    var button = $j('<input/>', { type: 'submit', value: value});
+    if (!disabled) {
+        button.click(function () {
+            doAction(action, agent.id)
+        });
+    }
+    return button;
+}
+
 function commentTooltip(agent) {
     if (agent.statusComment) {
         return $j('<img/>', {class: 'commentIcon', src: '/img/commentIcon.gif', width: "11px", height: "11px"})
                 .mouseover(function (event) {
-                    $j('#statusTooltip').remove();
                     $j('<div/>', {id: 'statusTooltip', class: 'statusTooltip', text: agent.statusComment})
                             .css({'position': 'absolute', 'top': event.pageY + 10, 'left': event.pageX + 18})
                             .appendTo('body');
                 }).mouseout(function () {
                     setTimeout(function () {
                         $j('#statusTooltip').remove();
-                    }, 500)
+                    }, 250)
                 });
     } else {
         return $j('<span/>');
@@ -55,87 +141,4 @@ function usage(agent) {
                     $j('#usageTooltip').remove();
                 }, 500)
             });
-}
-
-function populateAgentTable(sortBy, sortAsc) {
-    $j.ajax({
-        type: 'GET',
-        url: '/agentManagement/agents/',
-        dataType: 'json',
-        data: {
-            'sortBy': sortBy,
-            'sortAsc': sortAsc
-        },
-        success: function (agents) {
-
-            updateTableHeaders(sortBy, sortAsc);
-
-            var tableBody = $j('#agentTableBody');
-            tableBody.empty();
-
-            agents.forEach(function (agent) {
-                var row = $j('<tr/>').appendTo(tableBody);
-
-                $j('<td/>', { class: 'buildAgentName'})
-                        .append($j('<a/>', {href: '/agentDetails.html?id=' + agent.id, text: agent.name}))
-                        .appendTo(row);
-
-                $j('<td/>', { class: 'buildAgentStatus ' + agent.status.toLowerCase(), text: agent.status})
-                        .append(commentTooltip(agent))
-                        .appendTo(row);
-
-                $j('<td/>', { class: 'uptime', text: agent.formattedUptime })
-                        .appendTo(row);
-
-                $j('<td/>', { class: 'percentage', text: agent.diskSpaceSummary.formattedPercentageUsed })
-                        .appendTo(row);
-
-                $j('<td/>', { class: 'freeSpace', text: agent.diskSpaceSummary.formattedFreeSpace })
-                        .append(usage(agent))
-                        .appendTo(row);
-
-                $j('<td nowrap/>', { class: 'cleanup'})
-                        .append(cleanupButtonsFor(agent))
-                        .appendTo(row);
-
-                $j('<td/>', { class: 'rebuild' })
-                        .append(rebuildButtonFor(agent))
-                        .appendTo(row);
-
-            });
-        }});
-}
-
-function rebuildButtonFor(agent) {
-    if (agent.hasPendingRebuild) {
-        return button(agent, 'cancelRebuild', 'Cancel');
-    } else {
-        return button(agent, 'rebuild', 'Rebuild');
-    }
-}
-
-function cleanupButtonsFor(agent) {
-    var span = $j('<span/>');
-    span.append(button(agent, 'cleanAppDirs', 'App Dirs'));
-    span.append(button(agent, 'cleanMavenRepo', 'Maven Repo'));
-    return span;
-}
-
-function button(agent, action, value) {
-    return $j('<input/>', { type: 'submit', value: value})
-            .click(function () {
-                doAction(action, agent.id)
-            })
-}
-
-function prepareAgentList() {
-    var sortableElements = $j('table.sortable > thead > tr > th > span.sortable');
-
-    sortableElements.each(function () {
-        var element = $j(this);
-        element.click(function () {
-            populateAgentTable(element.attr('id'), !element.hasClass("sortedAsc"))
-        })
-    });
-    populateAgentTable(sortableElements.first().attr('id'), true);
 }

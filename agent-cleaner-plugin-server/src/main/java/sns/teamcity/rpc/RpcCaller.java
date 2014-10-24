@@ -47,10 +47,15 @@ public class RpcCaller {
         return callAndTransformResult(agent, new SuccessTransformer(), RpcMethod.cleanMavenRepository);
     }
 
-    @SuppressWarnings("unchecked")
     private <T> T callAndTransformResult(SBuildAgent agent, ResultTransformer<T> transformer, RpcMethod rpcMethod) {
         XmlRpcTarget xmlRpcTarget = rpcFactory.create(urlFor(agent), "TeamCity Agent", rpcMethod.timeout(), false);
-        return transformer.transform((Hashtable<String, String>) xmlRpcTarget.call(rpcMethod.method(), new Object[]{}));
+
+        return transformer.transform(call(rpcMethod, xmlRpcTarget));
+    }
+
+    @SuppressWarnings("unchecked")
+    private Hashtable<String, String> call(RpcMethod rpcMethod, XmlRpcTarget xmlRpcTarget) {
+        return (Hashtable<String, String>) xmlRpcTarget.call(rpcMethod.method(), rpcMethod.params());
     }
 
     private String urlFor(SBuildAgent buildAgent) {

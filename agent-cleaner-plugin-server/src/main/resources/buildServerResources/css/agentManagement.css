@@ -14,3 +14,28 @@
     background-color: white;
     padding: 5px
 }
+
+input.green-build {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+input.red-build {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+td.cleanup {
+    white-space: nowrap;
+    width: 145px;
+}
+
+.buildAgentName.green-build {
+    background: url('../../../../img/buildStates/running_green_transparent.gif') no-repeat right;
+    padding-right: 16px;
+}
+
+.buildAgentName.red-build {
+    background: url('../../../../img/buildStates/running_red_transparent.gif') no-repeat right;
+    padding-right: 16px;
+}

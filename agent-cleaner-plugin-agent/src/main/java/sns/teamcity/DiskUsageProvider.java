@@ -1,6 +1,8 @@
 package sns.teamcity;
 
-import org.apache.commons.io.FileUtils;
+import java.io.File;
+
+import static org.apache.commons.io.FileUtils.sizeOfDirectory;
 
 public class DiskUsageProvider {
     private final DirectoryLocator directory;
@@ -11,9 +13,13 @@ public class DiskUsageProvider {
 
     public java.util.Hashtable<String, String> usage() {
         return new DiskUsage(
-                FileUtils.sizeOfDirectory(directory.dataApps()),
-                FileUtils.sizeOfDirectory(directory.logsApps()),
-                FileUtils.sizeOfDirectory(directory.mavenRepository())
+                sizeOf(directory.dataApps()),
+                sizeOf(directory.logsApps()),
+                sizeOf(directory.mavenRepository())
         ).toHashTable();
+    }
+
+    private long sizeOf(File directory) {
+        return (directory == null || !directory.exists()) ? 0 : sizeOfDirectory(directory);
     }
 }

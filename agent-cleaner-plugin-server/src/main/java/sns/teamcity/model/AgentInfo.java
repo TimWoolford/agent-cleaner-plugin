@@ -17,14 +17,16 @@ public class AgentInfo {
     private final DiskUsage diskUsage;
     private final String status;
     private final String statusComment;
+    private final String runningBuildStatus;
 
-    public AgentInfo(int id, String name, DiskSpaceSummary diskSpaceSummary, boolean isEnabled, Comment statusComment, Date registrationDate, boolean hasPendingRebuild, DiskUsage diskUsage) {
+    public AgentInfo(int id, String name, DiskSpaceSummary diskSpaceSummary, boolean isEnabled, Comment statusComment, Date registrationDate, boolean hasPendingRebuild, DiskUsage diskUsage, String runningBuildStatus) {
         this.id = id;
         this.name = name;
         this.diskSpaceSummary = diskSpaceSummary;
         this.registrationDate = registrationDate;
         this.hasPendingRebuild = hasPendingRebuild;
         this.diskUsage = diskUsage;
+        this.runningBuildStatus = runningBuildStatus;
         this.status = isEnabled ? "Enabled" : "Disabled";
         this.statusComment = statusComment.getComment();
     }
@@ -47,6 +49,10 @@ public class AgentInfo {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getRunningBuildStatus() {
+        return runningBuildStatus;
     }
 
     public String getStatusComment() {

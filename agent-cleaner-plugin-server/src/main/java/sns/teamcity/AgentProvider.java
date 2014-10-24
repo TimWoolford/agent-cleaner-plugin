@@ -3,9 +3,12 @@ package sns.teamcity;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Ordering;
+import jetbrains.buildServer.messages.Status;
 import jetbrains.buildServer.serverSide.SBuildAgent;
 import jetbrains.buildServer.serverSide.SBuildServer;
+import jetbrains.buildServer.serverSide.SRunningBuild;
 import sns.teamcity.action.AgentRebuilder;
+import sns.teamcity.model.AgentComparators;
 import sns.teamcity.model.AgentInfo;
 import sns.teamcity.rpc.RpcCaller;
 
@@ -43,8 +46,19 @@ public class AgentProvider {
                         sBuildAgent.getStatusComment(),
                         sBuildAgent.getRegistrationTimestamp(),
                         rpc.hasPendingRebuild(sBuildAgent) || agentRebuilder.hasPendingRebuild(sBuildAgent),
-                        rpc.diskUsage(sBuildAgent)
-                );
+                        rpc.diskUsage(sBuildAgent),
+                        statusOf(sBuildAgent.getRunningBuild()));
+            }
+
+            private String statusOf(SRunningBuild runningBuild) {
+                if (runningBuild == null) {
+                    return "no-build";
+                }
+                Status buildStatus = runningBuild.getBuildStatus();
+                if (buildStatus == Status.NORMAL) {
+                    return "green-build";
+                }
+                return "red-build";
             }
         };
     }

@@ -1,5 +1,6 @@
 package sns.teamcity;
 
+import jetbrains.buildServer.XmlRpcHandlerManager;
 import jetbrains.buildServer.agent.AgentLifeCycleAdapter;
 import jetbrains.buildServer.agent.AgentLifeCycleListener;
 import jetbrains.buildServer.agent.BuildAgent;
@@ -14,7 +15,11 @@ public class AgentCleanerPluginAgentLifecycle extends AgentLifeCycleAdapter {
     private final AgentCleaner agentCleaner;
     private final DiskUsageProvider diskUsageProvider;
 
-    public AgentCleanerPluginAgentLifecycle(EventDispatcher<AgentLifeCycleListener> eventDispatcher, DiskSpaceSummariser diskSpaceSummariser, AgentRebuilder agentRebuilder, AgentCleaner agentCleaner, DiskUsageProvider diskUsageProvider) {
+    public AgentCleanerPluginAgentLifecycle(EventDispatcher<AgentLifeCycleListener> eventDispatcher,
+                                            DiskSpaceSummariser diskSpaceSummariser,
+                                            AgentRebuilder agentRebuilder,
+                                            AgentCleaner agentCleaner,
+                                            DiskUsageProvider diskUsageProvider) {
         this.diskSpaceSummariser = diskSpaceSummariser;
         this.agentRebuilder = agentRebuilder;
         this.agentCleaner = agentCleaner;
@@ -24,9 +29,11 @@ public class AgentCleanerPluginAgentLifecycle extends AgentLifeCycleAdapter {
 
     @Override
     public void agentStarted(BuildAgent agent) {
-        agent.getXmlRpcHandlerManager().addHandler(AgentDiskSpace.id(), diskSpaceSummariser);
-        agent.getXmlRpcHandlerManager().addHandler(RebuildAgent.id(), agentRebuilder);
-        agent.getXmlRpcHandlerManager().addHandler(CleanAgent.id(), agentCleaner);
-        agent.getXmlRpcHandlerManager().addHandler(DiskUsage.id(), diskUsageProvider);
+        XmlRpcHandlerManager rpcHandlerManager = agent.getXmlRpcHandlerManager();
+
+        rpcHandlerManager.addHandler(AgentDiskSpace.id(), diskSpaceSummariser);
+        rpcHandlerManager.addHandler(RebuildAgent.id(), agentRebuilder);
+        rpcHandlerManager.addHandler(CleanAgent.id(), agentCleaner);
+        rpcHandlerManager.addHandler(DiskUsage.id(), diskUsageProvider);
     }
 }

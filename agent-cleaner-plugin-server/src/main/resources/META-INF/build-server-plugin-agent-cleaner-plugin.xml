@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans default-autowire="constructor">
 
-    <bean id="agentManagementTab" class="sns.teamcity.AgentManagementTab" init-method="register"/>
+    <bean id="agentManagementTab" class="sns.teamcity.page.AgentManagementTab" init-method="register"/>
 
     <bean id="resourceLocator" class="sns.teamcity.ResourceLocator"/>
 
