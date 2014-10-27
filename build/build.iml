@@ -38,6 +38,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="module" module-name="agent-cleaner-plugin-server" />
     <orderEntry type="module-library">
       <library name="Maven: org.jetbrains.teamcity:server-api:7.1.4">

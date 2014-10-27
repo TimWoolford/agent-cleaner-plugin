@@ -6,13 +6,14 @@ import jetbrains.buildServer.serverSide.BuildServerListener;
 import jetbrains.buildServer.serverSide.SBuildAgent;
 import jetbrains.buildServer.serverSide.SRunningBuild;
 import jetbrains.buildServer.util.EventDispatcher;
+import org.apache.log4j.Logger;
 import sns.teamcity.action.AgentDisabler;
 import sns.teamcity.rpc.RpcCaller;
 
 import java.util.List;
 
 public class AgentManagementLifecycle extends BuildServerAdapter {
-
+    private static final Logger LOG = Logger.getLogger("agent-cleaner-plugin");
     private static final double ONE_GIGABYTE = Math.pow(1024, 3);
 
     private RpcCaller rpcCaller;
@@ -52,6 +53,7 @@ public class AgentManagementLifecycle extends BuildServerAdapter {
 
         @Override
         public void doAction(SBuildAgent agent) {
+            LOG.info("Cleaning App Dirs to reclaim disk space");
             rpcCaller.cleanAppDirs(agent);
         }
     }
@@ -65,6 +67,7 @@ public class AgentManagementLifecycle extends BuildServerAdapter {
 
         @Override
         public void doAction(SBuildAgent agent) {
+            LOG.info("Cleaning Maven Repo to reclaim disk space");
             rpcCaller.cleanMavenRepo(agent);
         }
     }
@@ -78,6 +81,7 @@ public class AgentManagementLifecycle extends BuildServerAdapter {
 
         @Override
         public void doAction(SBuildAgent agent) {
+            LOG.warn("Disabling agent [" + agent.getName() + "]. Unable to reclaim disk space.");
             disabler.disable(agent, null);
         }
     }

@@ -2,6 +2,7 @@ package sns.teamcity;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -11,6 +12,7 @@ import java.util.Hashtable;
 import static sns.teamcity.BooleanResponseBuilder.responseFor;
 
 public class AgentCleaner {
+    private static final Logger LOG = Logger.getLogger("agent-cleaner-plugin");
     private final DirectoryLocator directory;
 
     public AgentCleaner(DirectoryLocator directory) {
@@ -28,16 +30,20 @@ public class AgentCleaner {
 
     private boolean deleteDescendantsOf(File rootFile) {
         try {
+            LOG.info("Cleanup requested for : " + rootFile.getAbsolutePath());
+
             File[] directories = rootFile.listFiles(thatAreDirectories());
             if (directories == null ){
                 return false;
             }
 
             for (File dir : directories) {
+                LOG.info("Deleting directory : " + dir.getAbsolutePath());
                 FileUtils.deleteDirectory(dir);
             }
             return true;
         } catch (IOException e) {
+            LOG.error("Unable to clean directory", e);
             return false;
         }
     }
