@@ -13,8 +13,8 @@ public class ResourceLocator {
         return jsp("agentManagementTab");
     }
 
-    public String progressBarJs() {
-        return javascript("jquery-ui-progressbar");
+    public String tableSorter() {
+        return javascript("table-sorter");
     }
 
     public String agentManagementJs() {

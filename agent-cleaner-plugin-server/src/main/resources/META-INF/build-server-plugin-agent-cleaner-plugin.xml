@@ -8,15 +8,21 @@
 
     <bean id="agentProvider" class="sns.teamcity.AgentProvider"/>
 
-    <bean id="agentManagementController" class="sns.teamcity.controller.AgentManagementController"/>
+    <bean id="agentBulkActionController" class="sns.teamcity.controller.BulkActionController"/>
 
-    <bean id="agentController" class="sns.teamcity.controller.AgentController"/>
+    <bean id="agentDetailController" class="sns.teamcity.controller.AgentDetailController"/>
+
+    <bean id="agentSummaruController" class="sns.teamcity.controller.AgentSummaryController"/>
+
+    <bean id="agentActionController" class="sns.teamcity.controller.AgentActionController"/>
 
     <bean id="rebuildAction" class="sns.teamcity.action.AgentRebuilder"/>
 
     <bean id="actionator" class="sns.teamcity.action.Actionator"/>
 
     <bean id="lifecycle" class="sns.teamcity.AgentManagementLifecycle"/>
+
+    <bean id="viewBuilder" class="sns.teamcity.model.ViewBuilder"/>
 
     <bean id="agentRpcCaller" class="sns.teamcity.rpc.RpcCaller"/>
 </beans>

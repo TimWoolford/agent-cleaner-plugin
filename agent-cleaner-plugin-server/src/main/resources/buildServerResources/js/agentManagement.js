@@ -1,8 +1,8 @@
-function doAction(action, agentId) {
+function doBulkAction(action) {
     $j.ajax({
                 type: 'POST',
-                url: '/agentManagement/action/',
-                data: {'action': action, 'agentId': agentId },
+                url: '/agentManagement/bulkAction/',
+                data: {'action': action},
                 success: function () {
                     location.reload();
                 }
@@ -10,24 +10,40 @@ function doAction(action, agentId) {
     );
 }
 
-function populateAgentTable(sortBy, sortAsc) {
+function doAction(action, agentId) {
+    $j.ajax({
+                type: 'POST',
+                url: '/agentManagement/action/',
+                data: {'action': action, 'agentId': agentId },
+                success: function (agent) {
+                    var row = $j('tr#' + agent.id);
+                    updateCell(row.find('td.percentage'), agent.diskSpaceSummary.formattedPercentageUsed);
+                    updateCell(row.find('td.freeSpace'), agent.diskSpaceSummary.formattedFreeSpace).append(usage(agent));
+                    updateCell(row.find('td.uptime'), agent.formattedUptime);
+                    updateCell(row.find('td.buildAgentStatus'), agent.status).removeClass('enabled disabled').addClass(agent.status.toLowerCase())
+                }
+            }
+    );
+}
+
+function updateCell(cell, text) {
+    var ret = cell.text(text);
+    $j('#agentTable').trigger('updateCell', [cell, false]);
+    return ret;
+}
+
+function prepareAgentList() {
     $j.ajax({
         type: 'GET',
         url: '/agentManagement/agents/',
         dataType: 'json',
-        data: {
-            'sortBy': sortBy,
-            'sortAsc': sortAsc
-        },
         success: function (agents) {
-
-            updateTableHeaders(sortBy, sortAsc);
 
             var tableBody = $j('#agentTableBody');
             tableBody.empty();
 
             agents.forEach(function (agent) {
-                var row = $j('<tr/>').appendTo(tableBody);
+                var row = $j('<tr/>', {id: agent.id}).appendTo(tableBody);
 
                 $j('<td/>', { class: 'buildAgentName ' + agent.runningBuildStatus})
                         .append($j('<a/>', {href: '/agentDetails.html?id=' + agent.id, text: agent.name}))
@@ -40,11 +56,10 @@ function populateAgentTable(sortBy, sortAsc) {
                 $j('<td/>', { class: 'uptime', text: agent.formattedUptime })
                         .appendTo(row);
 
-                $j('<td/>', { class: 'percentage', text: agent.diskSpaceSummary.formattedPercentageUsed })
+                $j('<td/>', { class: 'percentage', text: '--' })
                         .appendTo(row);
 
-                $j('<td/>', { class: 'freeSpace', text: agent.diskSpaceSummary.formattedFreeSpace })
-                        .append(usage(agent))
+                $j('<td/>', { class: 'freeSpace', text: '--' })
                         .appendTo(row);
 
                 $j('<td/>', { class: 'cleanup'})
@@ -55,31 +70,40 @@ function populateAgentTable(sortBy, sortAsc) {
                         .append(rebuildButtonFor(agent))
                         .appendTo(row);
 
+                $j.ajax({
+                    type: 'GET',
+                    url: '/agentManagement/agentDetail/',
+                    datatype: 'json',
+                    data: { agentId: agent.id },
+                    success: hydrateRow
+                });
+
+                row.hover(
+                        function () {
+                            row.addClass("current-row");
+                        }, function () {
+                            row.removeClass("current-row");
+                        }
+                );
             });
-        }});
-}
 
-function prepareAgentList() {
-    var sortableElements = $j('table.sortable > thead > tr > th > span.sortable');
-
-    sortableElements.each(function () {
-        var element = $j(this);
-        element.click(function () {
-            populateAgentTable(element.attr('id'), !element.hasClass("sortedAsc"))
-        })
-    });
-    populateAgentTable(sortableElements.first().attr('id'), true);
-}
-
-function updateTableHeaders(sortBy, sortAsc) {
-    $j('table.sortable > thead > tr > th > span.sortable').each(function () {
-        var element = $j(this);
-        element.removeClass("sortedAsc sortedDesc");
-        if (sortBy == this.id) {
-            element.addClass(sortAsc ? "sortedAsc" : "sortedDesc")
+            $j(document).ajaxStop(function () {
+                $j('#agentTable').tablesorter({
+                    widgets: ["zebra"]
+                });
+            });
         }
     });
 }
+
+var hydrateRow = function (agent) {
+    var row = $j('tr#' + agent.id);
+    row.find('td.percentage').text(agent.diskSpaceSummary.formattedPercentageUsed);
+    row.find('td.freeSpace').text(agent.diskSpaceSummary.formattedFreeSpace)
+            .append(usage(agent));
+
+};
+
 
 function rebuildButtonFor(agent) {
     if (agent.hasPendingRebuild) {

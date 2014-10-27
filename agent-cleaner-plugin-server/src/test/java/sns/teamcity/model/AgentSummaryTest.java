@@ -9,24 +9,24 @@ import java.util.Date;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class AgentInfoTest {
+public class AgentSummaryTest {
 
     @Test
     public void displaysUptimeOfADay() throws Exception {
-        AgentInfo agentInfo = agentInfo(DateUtils.addDays(new Date(), -1));
+        AgentSummary agentInfo = agentSummary(DateUtils.addDays(new Date(), -1));
 
         assertThat(agentInfo.getFormattedUptime(), is("1 day 0 hours"));
     }
 
     @Test
     public void displaysUptimeOfAnHour() throws Exception {
-        AgentInfo agentInfo = agentInfo(DateUtils.addHours(new Date(), -1));
+        AgentSummary agentInfo = agentSummary(DateUtils.addHours(new Date(), -1));
 
         assertThat(agentInfo.getFormattedUptime(), is("0 days 1 hour"));
     }
 
-    private AgentInfo agentInfo(Date registrationDate) {
-        return new AgentInfo(1, "name", null, true, new MyComment("comment"), registrationDate, false, null, "foo");
+    private AgentSummary agentSummary(Date registrationDate) {
+        return new AgentSummary(1, "name", true, new MyComment("comment"), registrationDate, "foo");
     }
 
 

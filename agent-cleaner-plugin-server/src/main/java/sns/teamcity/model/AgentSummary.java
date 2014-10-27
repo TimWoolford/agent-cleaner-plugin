@@ -8,24 +8,18 @@ import java.util.Date;
 
 import static org.apache.commons.lang3.time.DurationFormatUtils.formatDuration;
 
-public class AgentInfo {
+public class AgentSummary {
     private final int id;
     private final String name;
-    private final DiskSpaceSummary diskSpaceSummary;
     private final Date registrationDate;
-    private final boolean hasPendingRebuild;
-    private final DiskUsage diskUsage;
     private final String status;
     private final String statusComment;
     private final String runningBuildStatus;
 
-    public AgentInfo(int id, String name, DiskSpaceSummary diskSpaceSummary, boolean isEnabled, Comment statusComment, Date registrationDate, boolean hasPendingRebuild, DiskUsage diskUsage, String runningBuildStatus) {
+    public AgentSummary(int id, String name, boolean isEnabled, Comment statusComment, Date registrationDate, String runningBuildStatus) {
         this.id = id;
         this.name = name;
-        this.diskSpaceSummary = diskSpaceSummary;
         this.registrationDate = registrationDate;
-        this.hasPendingRebuild = hasPendingRebuild;
-        this.diskUsage = diskUsage;
         this.runningBuildStatus = runningBuildStatus;
         this.status = isEnabled ? "Enabled" : "Disabled";
         this.statusComment = statusComment.getComment();
@@ -39,14 +33,6 @@ public class AgentInfo {
         return name;
     }
 
-    public DiskSpaceSummary getDiskSpaceSummary() {
-        return diskSpaceSummary;
-    }
-
-    public DiskUsage getDiskUsage() {
-        return diskUsage;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -57,10 +43,6 @@ public class AgentInfo {
 
     public String getStatusComment() {
         return statusComment;
-    }
-
-    public boolean getHasPendingRebuild() {
-        return hasPendingRebuild;
     }
 
     public long getUptime() {

@@ -30,6 +30,16 @@ td.cleanup {
     width: 145px;
 }
 
+th.tablesorter-headerAsc span {
+  background: url('../../../../img/sortUp.gif') no-repeat right;
+  padding-right: 16px;
+}
+
+th.tablesorter-headerDesc span {
+  background: url('../../../../img/sortDown.gif') no-repeat right;
+  padding-right: 16px;
+}
+
 .buildAgentName.green-build {
     background: url('../../../../img/buildStates/running_green_transparent.gif') no-repeat right;
     padding-right: 16px;
@@ -39,3 +49,28 @@ td.cleanup {
     background: url('../../../../img/buildStates/running_red_transparent.gif') no-repeat right;
     padding-right: 16px;
 }
+
+tr.even {
+    background: #ededed;
+}
+
+tr.even td {
+    background: #ededed;
+}
+
+tr.odd {
+    background: #FFFFFF;
+}
+
+tr.odd td {
+    background: #FFFFFF;
+}
+
+tr.current-row {
+    background: #FCFFE0;
+}
+
+tr.current-row td {
+    background: #FCFFE0;
+}
+

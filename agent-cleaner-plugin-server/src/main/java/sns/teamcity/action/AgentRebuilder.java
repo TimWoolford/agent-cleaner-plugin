@@ -16,8 +16,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class AgentRebuilder extends BuildServerAdapter {
-    private static final Logger LOG = Logger.getLogger("agent-cleaner-plugin");
-
     private final Set<SBuildAgent> rebuildingAgents = new HashSet<SBuildAgent>();
     private final RpcCaller rpcCaller;
     private final AgentDisabler agentDisabler;
@@ -38,11 +36,9 @@ public class AgentRebuilder extends BuildServerAdapter {
 
     @Override
     public void agentRegistered(SBuildAgent registeredAgent, long currentlyRunningBuildId) {
-        LOG.info(registeredAgent.getName() + " registered");
         Optional<SBuildAgent> optionalAgent = optionalAgent(registeredAgent);
         if (optionalAgent.isPresent()) {
             SBuildAgent agent = optionalAgent.get();
-            LOG.info("attempting to re-enable");
             agentDisabler.enable(registeredAgent, null);
             rebuildingAgents.remove(agent);
         }
@@ -67,10 +63,8 @@ public class AgentRebuilder extends BuildServerAdapter {
     }
 
     private void doAction(SBuildAgent agent, SUser user) {
-        LOG.info("initialising rebuild " + agent.getName());
         agentDisabler.disable(agent, user);
         if (agent.getRunningBuild() == null) {
-            LOG.info("no running build so.... ooomph!");
             rpcCaller.rebuildAgent(agent);
         }
         rebuildingAgents.add(agent);

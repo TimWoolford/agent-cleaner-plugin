@@ -6,19 +6,25 @@ import jetbrains.buildServer.web.openapi.WebControllerManager;
 import jetbrains.buildServer.web.util.SessionUser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
+import sns.teamcity.AgentProvider;
 import sns.teamcity.action.Action;
 import sns.teamcity.action.Actionator;
+import sns.teamcity.model.ViewBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AgentManagementController extends BaseController {
+public class AgentActionController extends BaseController {
 
     private final Actionator actionator;
+    private final ViewBuilder viewBuilder;
+    private final AgentProvider agentProvider;
 
-    public AgentManagementController(WebControllerManager webControllerManager, Actionator actionator) {
-        webControllerManager.registerController("/agentManagement/action/", this);
+    public AgentActionController(WebControllerManager webControllerManager, Actionator actionator, AgentProvider agentProvider, ViewBuilder viewBuilder) {
+        this.agentProvider = agentProvider;
         this.actionator = actionator;
+        this.viewBuilder = viewBuilder;
+        webControllerManager.registerController("/agentManagement/action/", this);
     }
 
     @Override
@@ -29,7 +35,7 @@ public class AgentManagementController extends BaseController {
 
         actionator.doAction(action, user, agentId);
 
-        return simpleView("OK");
+        return viewBuilder.buildView(agentProvider.getAgentDetail(agentId));
     }
 
     private Integer safeInteger(HttpServletRequest request, String paramName) {
