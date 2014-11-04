@@ -1,19 +1,20 @@
 package sns.teamcity;
 
 import com.google.common.collect.ImmutableList;
+import com.intellij.openapi.diagnostic.Logger;
+import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.serverSide.BuildServerAdapter;
 import jetbrains.buildServer.serverSide.BuildServerListener;
 import jetbrains.buildServer.serverSide.SBuildAgent;
 import jetbrains.buildServer.serverSide.SRunningBuild;
 import jetbrains.buildServer.util.EventDispatcher;
-import org.apache.log4j.Logger;
 import sns.teamcity.action.AgentDisabler;
 import sns.teamcity.rpc.RpcCaller;
 
 import java.util.List;
 
 public class AgentManagementLifecycle extends BuildServerAdapter {
-    private static final Logger LOG = Logger.getLogger("agent-cleaner-plugin");
+    private static final Logger LOG = Loggers.SERVER;
     private static final double ONE_GIGABYTE = Math.pow(1024, 3);
 
     private RpcCaller rpcCaller;
