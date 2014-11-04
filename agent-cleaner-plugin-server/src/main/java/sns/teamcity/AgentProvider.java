@@ -17,7 +17,7 @@ import java.util.List;
 public class AgentProvider {
     private final RpcCaller rpc;
     private final AgentRebuilder agentRebuilder;
-    private BuildAgentManager buildAgentManager;
+    private final BuildAgentManager buildAgentManager;
 
     public AgentProvider(SBuildServer server, RpcCaller rpcCaller, AgentRebuilder agentRebuilder) {
         this.rpc = rpcCaller;
