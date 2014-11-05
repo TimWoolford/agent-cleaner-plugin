@@ -42,14 +42,12 @@ public class AgentCleaner {
                     FileUtils.deleteDirectory(dir);
                 } else {
                     LOG.info("Deleting file : " + dir.getAbsolutePath());
-                    if (!dir.delete()) {
-                        if (dir.exists()) {
-                            LOG.warn("Unable to delete file : " + dir.getAbsolutePath());
-                        }
+                    if (!dir.delete() && dir.exists()) {
+                        LOG.warn("Unable to delete file : " + dir.getAbsolutePath());
                     }
                 }
             } catch (Exception e) {
-                LOG.error("Unable to remove file : ", e);
+                LOG.error("Unable to remove file/directory", e);
             }
         }
         return true;
