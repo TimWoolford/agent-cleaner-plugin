@@ -1,17 +1,17 @@
 package sns.teamcity;
 
+import com.intellij.openapi.diagnostic.Logger;
 import jetbrains.buildServer.log.Loggers;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.Hashtable;
 
 import static sns.teamcity.BooleanResponseBuilder.responseFor;
 
 public class AgentCleaner {
+    private static final Logger LOG = Loggers.AGENT;
     private final DirectoryLocator directory;
 
     public AgentCleaner(DirectoryLocator directory) {
@@ -28,26 +28,39 @@ public class AgentCleaner {
     }
 
     private boolean deleteDescendantsOf(File rootFile) {
-        try {
-            Loggers.AGENT.info("Cleanup requested for : " + rootFile.getAbsolutePath());
+        LOG.info("Cleanup requested for : " + rootFile.getAbsolutePath());
 
-            File[] directories = rootFile.listFiles(thatAreDirectories());
-            if (directories == null ){
-                return false;
-            }
-
-            for (File dir : directories) {
-                Loggers.AGENT.info("Deleting directory : " + dir.getAbsolutePath());
-                FileUtils.deleteDirectory(dir);
-            }
-            return true;
-        } catch (IOException e) {
-            Loggers.AGENT.error("Unable to clean directory", e);
+        File[] directories = rootFile.listFiles(thatAreDirectoriesOrFiles());
+        if (directories == null) {
             return false;
         }
+
+        for (File dir : directories) {
+            try {
+                if (dir.isDirectory()) {
+                    LOG.info("Deleting directory : " + dir.getAbsolutePath());
+                    FileUtils.deleteDirectory(dir);
+                } else {
+                    LOG.info("Deleting file : " + dir.getAbsolutePath());
+                    if (!dir.delete()) {
+                        if (dir.exists()) {
+                            LOG.warn("Unable to delete file : " + dir.getAbsolutePath());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                LOG.error("Unable to remove file : ", e);
+            }
+        }
+        return true;
     }
 
-    private FileFilter thatAreDirectories() {
-        return FileFilterUtils.directoryFileFilter();
+    private FileFilter thatAreDirectoriesOrFiles() {
+        return new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return true;
+            }
+        };
     }
 }
