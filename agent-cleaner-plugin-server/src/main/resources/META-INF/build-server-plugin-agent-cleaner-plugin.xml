@@ -12,13 +12,13 @@
 
     <bean id="agentDetailController" class="sns.teamcity.controller.AgentDetailController"/>
 
-    <bean id="agentSummaruController" class="sns.teamcity.controller.AgentSummaryController"/>
+    <bean id="agentSummaryController" class="sns.teamcity.controller.AgentSummaryController"/>
 
     <bean id="agentActionController" class="sns.teamcity.controller.AgentActionController"/>
 
     <bean id="rebuildAction" class="sns.teamcity.action.AgentRebuilder"/>
 
-    <bean id="actionator" class="sns.teamcity.action.Actionator"/>
+    <bean id="cleanAction" class="sns.teamcity.server.AgentCleaner"/>
 
     <bean id="lifecycle" class="sns.teamcity.AgentManagementLifecycle"/>
 

@@ -26,7 +26,7 @@ public class AgentSummaryTest {
     }
 
     private AgentSummary agentSummary(Date registrationDate) {
-        return new AgentSummary(1, "name", true, new MyComment("comment"), registrationDate, "foo");
+        return new AgentSummary(1, "name", true, new MyComment("comment"), registrationDate, "foo", "A Name");
     }
 
 

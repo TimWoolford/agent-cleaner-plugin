@@ -24,6 +24,8 @@
 </div>
 
 
+<div id="tooltip-container"/>
+
 <script type="text/javascript">
     $j(document).ready(prepareAgentList());
 </script>

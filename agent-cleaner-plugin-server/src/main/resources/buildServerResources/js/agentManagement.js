@@ -10,25 +10,40 @@ function doBulkAction(action) {
     );
 }
 
+function getAgentDetail(agent) {
+    $j.ajax({
+        type: 'GET',
+        url: '/agentManagement/agentDetail/',
+        datatype: 'json',
+        data: { agentId: agent.id },
+        success: function (agent) {
+            hydrateRow(agent);
+            setTimeout(function () {
+                getAgentDetail(agent)
+            }, 5000);
+        }
+    });
+}
+
 function doAction(action, agentId) {
     $j.ajax({
                 type: 'POST',
                 url: '/agentManagement/action/',
                 data: {'action': action, 'agentId': agentId },
-                success: function (agent) {
-                    var row = $j('tr#' + agent.id);
-                    updateCell(row.find('td.percentage'), agent.diskSpaceSummary.formattedPercentageUsed);
-                    updateCell(row.find('td.freeSpace'), agent.diskSpaceSummary.formattedFreeSpace).append(usage(agent));
-                    updateCell(row.find('td.uptime'), agent.formattedUptime);
-                    updateCell(row.find('td.buildAgentStatus'), agent.status).removeClass('enabled disabled').addClass(agent.status.toLowerCase())
-                }
+                success: hydrateRow
             }
     );
 }
 
-function updateCell(cell, text) {
+function updateText(cell, text) {
     var ret = cell.text(text);
-    $j('#agentTable').trigger('updateCell', [cell, false]);
+    $j('#agentTable').trigger('updateText', [cell, false]);
+    return ret;
+}
+
+function updateHtml(cell, html) {
+    var ret = cell.html(html);
+    $j('#agentTable').trigger('updateText', [cell, false]);
     return ret;
 }
 
@@ -45,38 +60,30 @@ function prepareAgentList() {
             agents.forEach(function (agent) {
                 var row = $j('<tr/>', {id: agent.id}).appendTo(tableBody);
 
-                $j('<td/>', { class: 'buildAgentName ' + agent.runningBuildStatus})
-                        .append($j('<a/>', {href: '/agentDetails.html?id=' + agent.id, text: agent.name}))
+                $j('<td/>', { class: 'build-agent-name'})
+                        .append(buildAgentName(agent))
                         .appendTo(row);
 
-                $j('<td/>', { class: 'buildAgentStatus ' + agent.status.toLowerCase(), text: agent.status})
-                        .append(commentTooltip(agent))
+                $j('<td/>', { class: 'build-agent-status'})
+                        .append(buildAgentStatus(agent))
                         .appendTo(row);
 
-                $j('<td/>', { class: 'uptime', text: agent.formattedUptime })
+                $j('<td/>', { class: 'uptime sort-data', text: agent.formattedUptime })
                         .appendTo(row);
 
-                $j('<td/>', { class: 'percentage', text: '--' })
+                $j('<td/>', { class: 'percentage sort-data', text: '--' })
                         .appendTo(row);
 
-                $j('<td/>', { class: 'freeSpace', text: '--' })
+                $j('<td/>', { class: 'free-space sort-data', text: '--' })
                         .appendTo(row);
 
                 $j('<td/>', { class: 'cleanup'})
-                        .append(cleanupButtonsFor(agent))
+                        .html(cleanupButtonsFor(agent))
                         .appendTo(row);
 
                 $j('<td/>', { class: 'rebuild' })
-                        .append(rebuildButtonFor(agent))
+                        .html(rebuildButtonFor(agent))
                         .appendTo(row);
-
-                $j.ajax({
-                    type: 'GET',
-                    url: '/agentManagement/agentDetail/',
-                    datatype: 'json',
-                    data: { agentId: agent.id },
-                    success: hydrateRow
-                });
 
                 row.hover(
                         function () {
@@ -85,12 +92,16 @@ function prepareAgentList() {
                             row.removeClass("current-row");
                         }
                 );
+
+                getAgentDetail(agent);
             });
 
-            $j(document).ajaxStop(function () {
-                $j('#agentTable').tablesorter({
-                    widgets: ["zebra"]
-                });
+            $j('#agentTable').tablesorter({
+                widgets: ["zebra"],
+                textExtraction: function (node, table, cellIndex) {
+                    return $j(node).find(".sort-data").text();
+                }
+
             });
         }
     });
@@ -98,10 +109,12 @@ function prepareAgentList() {
 
 var hydrateRow = function (agent) {
     var row = $j('tr#' + agent.id);
-    row.find('td.percentage').text(agent.diskSpaceSummary.formattedPercentageUsed);
-    row.find('td.freeSpace').text(agent.diskSpaceSummary.formattedFreeSpace)
-            .append(usage(agent));
-
+    updateHtml(row.find('td.build-agent-name'), buildAgentName(agent));
+    updateHtml(row.find('td.build-agent-status'), buildAgentStatus(agent));
+    updateText(row.find('td.uptime'), agent.formattedUptime);
+    updateText(row.find('td.percentage'), agent.diskSpaceSummary.formattedPercentageUsed);
+    updateHtml(row.find('td.free-space'), usageFor(agent));
+    updateHtml(row.find('td.cleanup'), cleanupButtonsFor(agent));
 };
 
 
@@ -131,38 +144,52 @@ function button(agent, action, value, disabled) {
     return button;
 }
 
-function commentTooltip(agent) {
-    if (agent.statusComment) {
-        return $j('<img/>', {class: 'commentIcon', src: '/img/commentIcon.gif', width: "11px", height: "11px"})
-                .mouseover(function (event) {
-                    $j('<div/>', {id: 'statusTooltip', class: 'statusTooltip', text: agent.statusComment})
-                            .css({'position': 'absolute', 'top': event.pageY + 10, 'left': event.pageX + 18})
-                            .appendTo('body');
-                }).mouseout(function () {
-                    setTimeout(function () {
-                        $j('#statusTooltip').remove();
-                    }, 250)
-                });
-    } else {
-        return $j('<span/>');
+function buildAgentName(agent) {
+    var agentNameElement = $j('<div/>', {class: agent.runningBuildStatus}).append($j('<a/>', {href: '/agentDetails.html?id=' + agent.id, class: 'sort-data', text: agent.name}));
+
+    if (agent.buildName) {
+        return attachTooltip(agentNameElement, $j('<span/>', {text: agent.buildName}));
     }
+
+    return agentNameElement;
 }
 
-function usage(agent) {
-    return $j('<img/>', {class: 'commentIcon', src: '/img/help.gif', width: "11px", height: "11px"})
-            .mouseover(function (event) {
-                var html = "<table>" +
-                        "<tr><td><em>/data/apps<em></td><td>" + agent.diskUsage.formattedDataApps + "</td></tr>" +
-                        "<tr><td><em>/logs/apps</em></td><td>" + agent.diskUsage.formattedLogsApps + "</td></tr>" +
-                        "<tr><td><em>.m2/repository</em></td><td>" + agent.diskUsage.formattedMavenRepo + "</td></tr>" +
-                        "</table>";
+function buildAgentStatus(agent) {
+    var statusElement = $j('<div/>', {class: 'build-agent-status  sort-data ' + agent.status.toLowerCase(), text: agent.status});
 
-                $j('<div/>', {id: 'usageTooltip', class: 'usageTooltip', html: html})
-                        .css({'position': 'absolute', 'top': event.pageY + 10, 'left': event.pageX + 18})
-                        .appendTo('body');
-            }).mouseout(function () {
-                setTimeout(function () {
-                    $j('#usageTooltip').remove();
-                }, 500)
-            });
+    if (agent.statusComment) {
+        return statusElement.append(attachTooltip($j('<img/>', {class: 'commentIcon', src: '/img/commentIcon.gif', width: "11px", height: "11px"}),
+                $j('<span/>', {text: agent.statusComment})
+        ));
+    }
+
+    return statusElement;
+}
+
+function usageFor(agent) {
+    return $j('<div/>', {class: 'sort-data', text: agent.diskSpaceSummary.formattedFreeSpace})
+            .append(attachTooltip($j('<img/>', {class: 'commentIcon', src: '/img/help.gif', width: "11px", height: "11px"}),
+                    $j('<table/>', {class: 'usage-table'})
+                            .html(
+                                    "<tr><td><em>/data/apps<em></td><td>" + agent.diskUsage.formattedDataApps + "</td></tr>" +
+                                    "<tr><td><em>/logs/apps</em></td><td>" + agent.diskUsage.formattedLogsApps + "</td></tr>" +
+                                    "<tr><td><em>.m2/repository</em></td><td>" + agent.diskUsage.formattedMavenRepo + "</td></tr>"
+                    )
+            )
+    );
+}
+
+function attachTooltip(triggerElement, tooltipElement) {
+    return triggerElement
+            .mouseover(function (event) {
+                $j('#tooltip-container').html(
+                        $j('<div/>', {class: 'tooltip'})
+                                .css({'position': 'absolute', 'top': event.pageY + 10, 'left': event.pageX + 18})
+                                .append(tooltipElement)
+                );
+            })
+            .mouseout(function () {
+                $j('#tooltip-container').empty();
+            }
+    );
 }

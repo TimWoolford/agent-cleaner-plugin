@@ -1,15 +1,9 @@
-.buildAgentStatus.disabled {
+.build-agent-status.disabled {
     text-decoration: line-through;
     color: darkred;
 }
 
-.statusTooltip {
-    border: 1px solid black;
-    background-color: white;
-    padding: 5px
-}
-
-.usageTooltip {
+.tooltip {
     border: 1px solid black;
     background-color: white;
     padding: 5px
@@ -40,12 +34,12 @@ th.tablesorter-headerDesc span {
   padding-right: 16px;
 }
 
-.buildAgentName.green-build {
+.build-agent-name div.green-build {
     background: url('../../../../img/buildStates/running_green_transparent.gif') no-repeat right;
     padding-right: 16px;
 }
 
-.buildAgentName.red-build {
+.build-agent-name div.red-build {
     background: url('../../../../img/buildStates/running_red_transparent.gif') no-repeat right;
     padding-right: 16px;
 }

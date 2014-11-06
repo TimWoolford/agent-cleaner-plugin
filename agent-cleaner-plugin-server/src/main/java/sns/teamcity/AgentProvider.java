@@ -33,10 +33,13 @@ public class AgentProvider {
                 sBuildAgent.getName(),
                 sBuildAgent.isEnabled(),
                 sBuildAgent.getStatusComment(),
+                sBuildAgent.getRegistrationTimestamp(),
+                statusOf(sBuildAgent.getRunningBuild()),
+                nameOf(sBuildAgent.getRunningBuild()),
                 rpc.hasPendingRebuild(sBuildAgent) || agentRebuilder.hasPendingRebuild(sBuildAgent),
                 rpc.diskSpaceSummary(sBuildAgent),
-                rpc.diskUsage(sBuildAgent),
-                statusOf(sBuildAgent.getRunningBuild()));
+                rpc.diskUsage(sBuildAgent)
+        );
     }
 
     public List<AgentSummary> getAgentSummaries() {
@@ -64,8 +67,13 @@ public class AgentProvider {
                         sBuildAgent.isEnabled(),
                         sBuildAgent.getStatusComment(),
                         sBuildAgent.getRegistrationTimestamp(),
-                        statusOf(sBuildAgent.getRunningBuild()));
+                        statusOf(sBuildAgent.getRunningBuild()),
+                        nameOf(sBuildAgent.getRunningBuild()));
             }
         };
+    }
+
+    private String nameOf(SRunningBuild runningBuild) {
+        return runningBuild == null ? "" : runningBuild.getFullName();
     }
 }
