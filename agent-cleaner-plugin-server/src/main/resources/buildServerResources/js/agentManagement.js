@@ -37,13 +37,13 @@ function doAction(action, agentId) {
 
 function updateText(cell, text) {
     var ret = cell.text(text);
-    $j('#agentTable').trigger('updateText', [cell, false]);
+    $j('#agentTable').trigger('updateCell', [cell, false]);
     return ret;
 }
 
 function updateHtml(cell, html) {
     var ret = cell.html(html);
-    $j('#agentTable').trigger('updateText', [cell, false]);
+    $j('#agentTable').trigger('updateCell', [cell, false]);
     return ret;
 }
 
@@ -98,8 +98,8 @@ function prepareAgentList() {
 
             $j('#agentTable').tablesorter({
                 widgets: ["zebra"],
-                textExtraction: function (node, table, cellIndex) {
-                    return $j(node).find(".sort-data").text();
+                textExtraction: function (node) {
+                    return $j(node).find('.sort-data').text();
                 }
 
             });
