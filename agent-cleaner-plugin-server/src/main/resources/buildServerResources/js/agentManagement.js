@@ -98,8 +98,13 @@ function prepareAgentList() {
 
             $j('#agentTable').tablesorter({
                 widgets: ["zebra"],
-                textExtraction: function (node) {
-                    return $j(node).find('.sort-data').text();
+                textExtraction: function (rawNode) {
+                    var node = $j(rawNode);
+                    if (node.hasClass('sort-data')) {
+                        return node.text();
+                    } else {
+                        return node.find('.sort-data').text();
+                    }
                 }
 
             });

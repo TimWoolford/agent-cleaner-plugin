@@ -13,6 +13,10 @@ public class ResourceLocator {
         return jsp("agentManagementTab");
     }
 
+    public String agentManagementAdminJsp() {
+        return jsp("agentManagementAdminPage");
+    }
+
     public String tableSorter() {
         return javascript("table-sorter");
     }

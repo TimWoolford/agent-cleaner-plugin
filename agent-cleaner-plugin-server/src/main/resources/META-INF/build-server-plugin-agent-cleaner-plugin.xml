@@ -4,6 +4,8 @@
 
     <bean id="agentManagementTab" class="sns.teamcity.page.AgentManagementTab" init-method="register"/>
 
+    <bean id="agentManagementAdminPage" class="sns.teamcity.page.AgentManagementAdminPage" init-method="register"/>
+
     <bean id="resourceLocator" class="sns.teamcity.ResourceLocator"/>
 
     <bean id="agentProvider" class="sns.teamcity.AgentProvider"/>

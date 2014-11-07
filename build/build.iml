@@ -9,6 +9,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="agent-cleaner-plugin-agent" />
+    <orderEntry type="module-library">
+      <library name="Maven: org.jetbrains.teamcity:agent-api:7.1.4">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/agent-api.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="module" module-name="agent-cleaner-plugin-common" />
     <orderEntry type="module-library">
       <library name="Maven: org.jetbrains.teamcity:runtime-util:7.1.4">
@@ -23,16 +33,6 @@
       <library name="Maven: org.jetbrains.teamcity:common-api:7.1.4">
         <CLASSES>
           <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/common-api.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: org.jetbrains.teamcity:agent-api:7.1.4">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/TeamCity/devPackage/agent-api.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -54,4 +54,3 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.3.2" level="project" />
   </component>
 </module>
-
