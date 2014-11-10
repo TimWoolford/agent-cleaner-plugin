@@ -9,7 +9,7 @@ public enum RpcMethod {
 
     usage(Handler.DiskUsage, "usage"),
 
-    cleanSnsAppDirs(Handler.CleanAgent, "cleanSnsAppDirs", 30000),
+    cleanSnsAppDirs(Handler.CleanAgent, "cleanDirectories", 30000, new Object[]{"/data/apps", "/logs/apps"}),
     cleanMavenRepository(Handler.CleanAgent, "cleanMavenRepository", 30000),;
 
     private final Handler handler;
@@ -22,10 +22,14 @@ public enum RpcMethod {
     }
 
     private RpcMethod(Handler rebuildAgent, String methodName, int timeout) {
+        this(rebuildAgent, methodName, timeout, new Object[]{});
+    }
+
+    private RpcMethod(Handler rebuildAgent, String methodName, int timeout, Object[] params) {
         this.handler = rebuildAgent;
         this.methodName = methodName;
         this.timeout = timeout;
-        this.params = new Object[]{};
+        this.params = params;
     }
 
     public String method() {

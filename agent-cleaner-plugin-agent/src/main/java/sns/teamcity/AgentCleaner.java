@@ -27,6 +27,11 @@ public class AgentCleaner {
                 deleteDescendantsOf(directory.dataApps()) && deleteDescendantsOf(directory.logsApps()));
     }
 
+    public Hashtable<String, String> cleanDirectories() {
+        return responseFor(
+                deleteDescendantsOf(directory.dataApps()) && deleteDescendantsOf(directory.logsApps()));
+    }
+
     private boolean deleteDescendantsOf(File rootFile) {
         LOG.info("Cleanup requested for : " + rootFile.getAbsolutePath());
 
