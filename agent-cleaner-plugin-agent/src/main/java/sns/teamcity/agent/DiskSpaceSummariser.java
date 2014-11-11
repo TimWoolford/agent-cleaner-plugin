@@ -1,6 +1,7 @@
-package sns.teamcity;
+package sns.teamcity.agent;
 
 import jetbrains.buildServer.agent.BuildAgent;
+import sns.teamcity.DiskSpaceSummary;
 
 import java.util.Hashtable;
 

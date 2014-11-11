@@ -1,5 +1,7 @@
 package sns.teamcity.rpc;
 
+import static sns.teamcity.util.FileEncoder.encode;
+
 public enum RpcMethod {
     rebuild(Handler.RebuildAgent, "rebuild"),
     cancel(Handler.RebuildAgent, "cancel"),
@@ -9,8 +11,8 @@ public enum RpcMethod {
 
     usage(Handler.DiskUsage, "usage"),
 
-    cleanSnsAppDirs(Handler.CleanAgent, "cleanDirectories", 30000, new Object[]{"/data/apps", "/logs/apps"}),
-    cleanMavenRepository(Handler.CleanAgent, "cleanMavenRepository", 30000),;
+    cleanSnsAppDirs(Handler.CleanAgent, "cleanDirectories", 30000, new Object[]{encode("/data/apps", "/logs/apps")}),
+    cleanMavenRepository(Handler.CleanAgent, "cleanDirectories", 30000, new Object[]{encode("${user.home}/.m2/repository")}),;
 
     private final Handler handler;
     private final String methodName;

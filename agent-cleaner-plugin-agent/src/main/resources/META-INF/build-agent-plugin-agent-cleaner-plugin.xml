@@ -3,15 +3,15 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans default-autowire="constructor">
-    <bean id="diskSpaceSummariser" class="sns.teamcity.DiskSpaceSummariser"/>
+    <bean id="diskSpaceSummariser" class="sns.teamcity.agent.DiskSpaceSummariser"/>
 
-    <bean id="agentRebuilder" class="sns.teamcity.AgentRebuilder"/>
+    <bean id="agentRebuilder" class="sns.teamcity.agent.AgentRebuilder"/>
 
     <bean id="directoryLocator" class="sns.teamcity.DirectoryLocator"/>
 
-    <bean id="agentCleaner" class="sns.teamcity.AgentCleaner"/>
+    <bean id="agentCleaner" class="sns.teamcity.agent.AgentCleaner"/>
 
-    <bean id="diskUsageProvider" class="sns.teamcity.DiskUsageProvider"/>
+    <bean id="diskUsageProvider" class="sns.teamcity.agent.DiskUsageProvider"/>
 
     <bean id="lifecycle" class="sns.teamcity.AgentCleanerPluginAgentLifecycle"/>
 </beans>

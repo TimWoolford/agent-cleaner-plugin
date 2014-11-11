@@ -1,35 +1,26 @@
-package sns.teamcity;
+package sns.teamcity.agent;
 
 import com.intellij.openapi.diagnostic.Logger;
 import jetbrains.buildServer.log.Loggers;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Hashtable;
 
 import static sns.teamcity.BooleanResponseBuilder.responseFor;
+import static sns.teamcity.util.FileEncoder.decode;
 
 public class AgentCleaner {
     private static final Logger LOG = Loggers.AGENT;
-    private final DirectoryLocator directory;
 
-    public AgentCleaner(DirectoryLocator directory) {
-        this.directory = directory;
-    }
-
-    public Hashtable<String, String> cleanMavenRepository() {
-        return responseFor(deleteDescendantsOf(directory.mavenRepository()));
-    }
-
-    public Hashtable<String, String> cleanSnsAppDirs() {
-        return responseFor(
-                deleteDescendantsOf(directory.dataApps()) && deleteDescendantsOf(directory.logsApps()));
-    }
-
-    public Hashtable<String, String> cleanDirectories() {
-        return responseFor(
-                deleteDescendantsOf(directory.dataApps()) && deleteDescendantsOf(directory.logsApps()));
+    public Hashtable<String, String> cleanDirectories(String csvDirs) {
+        boolean success = true;
+        for (String dir : decode(csvDirs)) {
+            success = success && deleteDescendantsOf(new File(dir));
+        }
+        return responseFor(success);
     }
 
     private boolean deleteDescendantsOf(File rootFile) {
@@ -59,11 +50,6 @@ public class AgentCleaner {
     }
 
     private FileFilter thatAreDirectoriesOrFiles() {
-        return new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return true;
-            }
-        };
+        return FileFilterUtils.trueFileFilter();
     }
 }

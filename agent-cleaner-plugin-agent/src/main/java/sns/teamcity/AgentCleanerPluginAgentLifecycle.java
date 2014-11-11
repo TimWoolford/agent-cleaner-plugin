@@ -5,8 +5,14 @@ import jetbrains.buildServer.agent.AgentLifeCycleAdapter;
 import jetbrains.buildServer.agent.AgentLifeCycleListener;
 import jetbrains.buildServer.agent.BuildAgent;
 import jetbrains.buildServer.util.EventDispatcher;
+import org.jetbrains.annotations.NotNull;
+import sns.teamcity.agent.AgentCleaner;
+import sns.teamcity.agent.AgentRebuilder;
+import sns.teamcity.agent.DiskSpaceSummariser;
+import sns.teamcity.agent.DiskUsageProvider;
 
 import static sns.teamcity.rpc.Handler.*;
+import static sns.teamcity.rpc.Handler.DiskUsage;
 
 public class AgentCleanerPluginAgentLifecycle extends AgentLifeCycleAdapter {
 
@@ -28,7 +34,7 @@ public class AgentCleanerPluginAgentLifecycle extends AgentLifeCycleAdapter {
     }
 
     @Override
-    public void agentStarted(BuildAgent agent) {
+    public void agentStarted(@NotNull BuildAgent agent) {
         XmlRpcHandlerManager rpcHandlerManager = agent.getXmlRpcHandlerManager();
 
         rpcHandlerManager.addHandler(AgentDiskSpace.id(), diskSpaceSummariser);

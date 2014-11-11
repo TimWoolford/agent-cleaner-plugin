@@ -1,4 +1,4 @@
-package sns.teamcity;
+package sns.teamcity.agent;
 
 import java.io.File;
 import java.io.IOException;

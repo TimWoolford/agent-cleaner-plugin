@@ -29,6 +29,10 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:14.0.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.intellij:openapi:7.0.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.intellij:annotations:7.0.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.intellij:extensions:7.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.8.1" level="project" />
   </component>
 </module>

@@ -23,15 +23,17 @@
             <groupId>org.jetbrains.teamcity</groupId>
             <artifactId>agent-api</artifactId>
         </dependency>
-
         <dependency>
          	<groupId>com.intellij</groupId>
          	<artifactId>openapi</artifactId>
          </dependency>
-
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
 
         <dependency>
