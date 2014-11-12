@@ -10,6 +10,7 @@ public class AgentRebuilder {
 
     private static final String REBUILD_AGENT_FILENAME = "/tmp/REBUILD_AGENT";
 
+    @SuppressWarnings("UnusedDeclaration")
     public Hashtable<String, String> rebuild() {
         try {
             return responseFor(new File(REBUILD_AGENT_FILENAME).createNewFile());
@@ -18,10 +19,12 @@ public class AgentRebuilder {
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Hashtable<String, String> cancel() {
         return responseFor(removeRebuildFile());
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Hashtable<String, String> hasPendingRebuild() {
         return responseFor(new File(REBUILD_AGENT_FILENAME).exists());
     }

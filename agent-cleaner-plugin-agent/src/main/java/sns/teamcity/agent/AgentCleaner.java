@@ -15,6 +15,7 @@ import static sns.teamcity.util.FileEncoder.decode;
 public class AgentCleaner {
     private static final Logger LOG = Loggers.AGENT;
 
+    @SuppressWarnings("UnusedDeclaration")
     public Hashtable<String, String> cleanDirectories(String csvDirs) {
         boolean success = true;
         for (String dir : decode(csvDirs)) {

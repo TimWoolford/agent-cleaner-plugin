@@ -4,7 +4,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import sns.teamcity.DiskUsage;
 import sns.teamcity.FileSummary;
-import sns.teamcity.util.FileEncoder;
 
 import java.io.File;
 
@@ -13,6 +12,7 @@ import static sns.teamcity.util.FileEncoder.decode;
 
 public class DiskUsageProvider {
 
+    @SuppressWarnings("UnusedDeclaration")
     public java.util.Hashtable<String, String> usage(String csvDirs) {
         return new DiskUsage(
                 Lists.transform(decode(csvDirs), FileSummaryFunction.asFileSummary())
