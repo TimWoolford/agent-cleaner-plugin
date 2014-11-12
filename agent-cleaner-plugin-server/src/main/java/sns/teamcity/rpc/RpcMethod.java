@@ -9,7 +9,7 @@ public enum RpcMethod {
 
     diskSpaceSummary(Handler.AgentDiskSpace, "diskSpaceSummary"),
 
-    usage(Handler.DiskUsage, "usage"),
+    usage(Handler.DiskUsage, "usage", 2000, new Object[] {encode("/data/apps", "/logs/apps", "${user.home}/.m2/repository"  )}),
 
     cleanSnsAppDirs(Handler.CleanAgent, "cleanDirectories", 30000, new Object[]{encode("/data/apps", "/logs/apps")}),
     cleanMavenRepository(Handler.CleanAgent, "cleanDirectories", 30000, new Object[]{encode("${user.home}/.m2/repository")}),;

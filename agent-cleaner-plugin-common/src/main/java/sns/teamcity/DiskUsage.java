@@ -1,63 +1,52 @@
 package sns.teamcity;
 
-import java.util.Hashtable;
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
-import static sns.teamcity.Formatter.formatDiskSpace;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Map;
+
+import static com.google.common.collect.Collections2.transform;
 
 public class DiskUsage {
-    private static final String DATA_APPS = "dataApps";
-    private static final String LOGS_APPS = "logsApps";
-    private static final String MAVEN_REPO = "mavenRepo";
+    private final Collection<FileSummary> fileSummaries;
 
-    private final long dataApps;
-    private final long logsApps;
-    private final long mavenRepo;
-
-    public DiskUsage(long dataApps, long logsApps, long mavenRepo) {
-        this.dataApps = dataApps;
-        this.logsApps = logsApps;
-        this.mavenRepo = mavenRepo;
+    public DiskUsage(Collection<FileSummary> fileSummaries) {
+        this.fileSummaries = fileSummaries;
     }
 
     public DiskUsage(Hashtable<String, String> hashtable) {
-        this(
-                Long.valueOf(hashtable.get(DATA_APPS)),
-                Long.valueOf(hashtable.get(LOGS_APPS)),
-                Long.valueOf(hashtable.get(MAVEN_REPO))
-        );
+        this(transform(hashtable.entrySet(), new Function<Map.Entry<String, String>, FileSummary>() {
+            @Override
+            public FileSummary apply(Map.Entry<String, String> entry) {
+                return new FileSummary(entry.getKey(), Long.valueOf(entry.getValue()));
+            }
+        }));
     }
 
     public Hashtable<String, String> toHashTable() {
-        return new Hashtable<String, String>() {
-            {
-                put(DATA_APPS, String.valueOf(dataApps));
-                put(LOGS_APPS, String.valueOf(logsApps));
-                put(MAVEN_REPO, String.valueOf(mavenRepo));
+        ImmutableMap<String, FileSummary> rawMap = Maps.uniqueIndex(fileSummaries, new Function<FileSummary, String>() {
+            @Override
+            public String apply(FileSummary fileSummary) {
+                return fileSummary.getPath();
             }
-        };
+        });
+
+        Map<String, String> map = Maps.transformEntries(rawMap, new StringFileSummaryStringEntryTransformer());
+
+        return new Hashtable<String, String>(map);
     }
 
-    public long getDataApps() {
-        return dataApps;
+    public Collection<FileSummary> getFileSummaries() {
+        return fileSummaries;
     }
 
-    public long getLogsApps() {
-        return logsApps;
-    }
-
-    public long getMavenRepo() {
-        return mavenRepo;
-    }
-
-    public String getFormattedDataApps() {
-        return formatDiskSpace(dataApps);
-    }
-
-    public String getFormattedLogsApps() {
-        return formatDiskSpace(logsApps);
-    }
-
-    public String getFormattedMavenRepo() {
-        return formatDiskSpace(mavenRepo);
+    private static class StringFileSummaryStringEntryTransformer implements Maps.EntryTransformer<String, FileSummary, String> {
+        @Override
+        public String transformEntry(String key, FileSummary fileSummary) {
+            return String.valueOf(fileSummary.getSize());
+        }
     }
 }

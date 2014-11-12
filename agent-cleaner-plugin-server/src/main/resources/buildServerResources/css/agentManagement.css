@@ -68,3 +68,10 @@ tr.current-row td {
     background: #FCFFE0;
 }
 
+td.usage-path {
+    font-style: italic;
+}
+
+td.usage-size {
+    text-align:right;
+}

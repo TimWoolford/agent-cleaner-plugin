@@ -15,7 +15,7 @@ function getAgentDetail(agent) {
         type: 'GET',
         url: '/agentManagement/agentDetail/',
         datatype: 'json',
-        data: { agentId: agent.id },
+        data: {agentId: agent.id},
         success: function (agent) {
             hydrateRow(agent);
             setTimeout(function () {
@@ -29,7 +29,7 @@ function doAction(action, agentId) {
     $j.ajax({
                 type: 'POST',
                 url: '/agentManagement/action/',
-                data: {'action': action, 'agentId': agentId },
+                data: {'action': action, 'agentId': agentId},
                 success: hydrateRow
             }
     );
@@ -60,28 +60,28 @@ function prepareAgentList() {
             agents.forEach(function (agent) {
                 var row = $j('<tr/>', {id: agent.id}).appendTo(tableBody);
 
-                $j('<td/>', { class: 'build-agent-name'})
+                $j('<td/>', {class: 'build-agent-name'})
                         .append(buildAgentName(agent))
                         .appendTo(row);
 
-                $j('<td/>', { class: 'build-agent-status'})
+                $j('<td/>', {class: 'build-agent-status'})
                         .append(buildAgentStatus(agent))
                         .appendTo(row);
 
-                $j('<td/>', { class: 'uptime sort-data', text: agent.formattedUptime })
+                $j('<td/>', {class: 'uptime sort-data', text: agent.formattedUptime})
                         .appendTo(row);
 
-                $j('<td/>', { class: 'percentage sort-data', text: '--' })
+                $j('<td/>', {class: 'percentage sort-data', text: '--'})
                         .appendTo(row);
 
-                $j('<td/>', { class: 'free-space sort-data', text: '--' })
+                $j('<td/>', {class: 'free-space sort-data', text: '--'})
                         .appendTo(row);
 
-                $j('<td/>', { class: 'cleanup'})
+                $j('<td/>', {class: 'cleanup'})
                         .html(cleanupButtonsFor(agent))
                         .appendTo(row);
 
-                $j('<td/>', { class: 'rebuild' })
+                $j('<td/>', {class: 'rebuild'})
                         .html(rebuildButtonFor(agent))
                         .appendTo(row);
 
@@ -140,7 +140,7 @@ function cleanupButtonsFor(agent) {
 }
 
 function button(agent, action, value, disabled) {
-    var button = $j('<input/>', { type: 'submit', value: value});
+    var button = $j('<input/>', {type: 'submit', value: value});
     if (!disabled) {
         button.click(function () {
             doAction(action, agent.id)
@@ -175,13 +175,17 @@ function usageFor(agent) {
     return $j('<div/>', {class: 'sort-data', text: agent.diskSpaceSummary.formattedFreeSpace})
             .append(attachTooltip($j('<img/>', {class: 'commentIcon', src: '/img/help.gif', width: "11px", height: "11px"}),
                     $j('<table/>', {class: 'usage-table'})
-                            .html(
-                                    "<tr><td><em>/data/apps<em></td><td>" + agent.diskUsage.formattedDataApps + "</td></tr>" +
-                                    "<tr><td><em>/logs/apps</em></td><td>" + agent.diskUsage.formattedLogsApps + "</td></tr>" +
-                                    "<tr><td><em>.m2/repository</em></td><td>" + agent.diskUsage.formattedMavenRepo + "</td></tr>"
-                    )
+                            .html(rowsFor(agent.diskUsage))
             )
     );
+}
+
+function rowsFor(usage) {
+    var html = "";
+    usage.fileSummaries.forEach(function (summary) {
+        html += "<tr><td class='usage-path'>" + summary.path + "</td><td class='usage-size'>" + summary.formattedSize + "</td></tr>";
+    });
+    return html;
 }
 
 function attachTooltip(triggerElement, tooltipElement) {
