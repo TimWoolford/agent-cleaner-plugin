@@ -1,8 +1,6 @@
 package sns.teamcity.model;
 
 import jetbrains.buildServer.serverSide.comments.Comment;
-import sns.teamcity.DiskSpaceSummary;
-import sns.teamcity.DiskUsage;
 
 import java.util.Date;
 

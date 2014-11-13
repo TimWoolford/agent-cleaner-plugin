@@ -2,14 +2,13 @@ package sns.teamcity.controller;
 
 import jetbrains.buildServer.controllers.BaseController;
 import jetbrains.buildServer.web.openapi.WebControllerManager;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.ModelAndView;
 import sns.teamcity.AgentProvider;
-import sns.teamcity.model.AgentSummary;
-import sns.teamcity.model.ViewBuilder;
+import sns.teamcity.view.ViewBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public class AgentSummaryController extends BaseController {
     private final AgentProvider agentProvider;
@@ -22,7 +21,7 @@ public class AgentSummaryController extends BaseController {
     }
 
     @Override
-    protected ModelAndView doHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    protected ModelAndView doHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) throws Exception {
         return viewBuilder.buildView(agentProvider.getAgentSummaries());
     }
 }

@@ -7,12 +7,13 @@ import jetbrains.buildServer.users.SUser;
 import jetbrains.buildServer.web.openapi.WebControllerManager;
 import jetbrains.buildServer.web.util.SessionUser;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.ModelAndView;
 import sns.teamcity.AgentProvider;
 import sns.teamcity.action.Action;
 import sns.teamcity.action.AgentRebuilder;
-import sns.teamcity.model.ViewBuilder;
 import sns.teamcity.server.AgentCleaner;
+import sns.teamcity.view.ViewBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,7 @@ public class AgentActionController extends BaseController {
     }
 
     @Override
-    protected ModelAndView doHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    protected ModelAndView doHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) throws Exception {
         SUser user = SessionUser.getUser(request);
         Action action = Action.valueOf(request.getParameter("action"));
         Integer agentId = safeInteger(request, "agentId");

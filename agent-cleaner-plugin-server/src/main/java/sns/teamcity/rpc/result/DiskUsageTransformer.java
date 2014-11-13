@@ -1,6 +1,6 @@
 package sns.teamcity.rpc.result;
 
-import sns.teamcity.DiskUsage;
+import sns.teamcity.model.DiskUsage;
 
 import java.util.Hashtable;
 

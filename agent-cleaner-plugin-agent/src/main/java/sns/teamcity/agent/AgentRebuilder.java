@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 
-import static sns.teamcity.BooleanResponseBuilder.responseFor;
+import static sns.teamcity.util.BooleanResponseBuilder.responseFor;
 
 public class AgentRebuilder {
 

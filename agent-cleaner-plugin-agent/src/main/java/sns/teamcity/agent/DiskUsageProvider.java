@@ -2,8 +2,8 @@ package sns.teamcity.agent;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import sns.teamcity.DiskUsage;
-import sns.teamcity.FileSummary;
+import sns.teamcity.model.DiskUsage;
+import sns.teamcity.model.FileSummary;
 
 import java.io.File;
 

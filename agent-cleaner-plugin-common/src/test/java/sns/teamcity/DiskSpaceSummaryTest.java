@@ -1,6 +1,7 @@
 package sns.teamcity;
 
 import org.junit.Test;
+import sns.teamcity.model.DiskSpaceSummary;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

@@ -1,4 +1,4 @@
-package sns.teamcity;
+package sns.teamcity.model;
 
 import static sns.teamcity.Formatter.formatDiskSpace;
 

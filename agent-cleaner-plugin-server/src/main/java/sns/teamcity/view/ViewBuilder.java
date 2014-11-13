@@ -1,4 +1,4 @@
-package sns.teamcity.model;
+package sns.teamcity.view;
 
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;

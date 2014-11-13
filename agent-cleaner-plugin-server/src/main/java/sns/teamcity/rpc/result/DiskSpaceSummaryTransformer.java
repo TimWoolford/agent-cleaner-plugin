@@ -1,6 +1,6 @@
 package sns.teamcity.rpc.result;
 
-import sns.teamcity.DiskSpaceSummary;
+import sns.teamcity.model.DiskSpaceSummary;
 
 import java.util.Hashtable;
 

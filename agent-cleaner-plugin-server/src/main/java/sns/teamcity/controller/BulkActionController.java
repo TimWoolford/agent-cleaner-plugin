@@ -6,7 +6,7 @@ import jetbrains.buildServer.serverSide.SBuildAgent;
 import jetbrains.buildServer.users.SUser;
 import jetbrains.buildServer.web.openapi.WebControllerManager;
 import jetbrains.buildServer.web.util.SessionUser;
-import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.ModelAndView;
 import sns.teamcity.action.Action;
 import sns.teamcity.action.AgentDisabler;
@@ -27,7 +27,7 @@ public class BulkActionController extends BaseController {
     }
 
     @Override
-    protected ModelAndView doHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    protected ModelAndView doHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) throws Exception {
         SUser user = SessionUser.getUser(request);
         Action action = Action.valueOf(request.getParameter("action"));
 
@@ -46,10 +46,5 @@ public class BulkActionController extends BaseController {
         }
 
         return simpleView("OK");
-    }
-
-    private Integer safeInteger(HttpServletRequest request, String paramName) {
-        String parameter = request.getParameter(paramName);
-        return StringUtils.isEmpty(parameter) ? null : Integer.valueOf(parameter);
     }
 }

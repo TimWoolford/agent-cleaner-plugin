@@ -2,9 +2,10 @@ package sns.teamcity.controller;
 
 import jetbrains.buildServer.controllers.BaseController;
 import jetbrains.buildServer.web.openapi.WebControllerManager;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.ModelAndView;
 import sns.teamcity.AgentProvider;
-import sns.teamcity.model.ViewBuilder;
+import sns.teamcity.view.ViewBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +21,8 @@ public class AgentDetailController extends BaseController {
     }
 
     @Override
-    protected ModelAndView doHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-        int agentId = Integer.valueOf(httpServletRequest.getParameter("agentId"));
+    protected ModelAndView doHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) throws Exception {
+        int agentId = Integer.valueOf(request.getParameter("agentId"));
 
         return viewBuilder.buildView(agentProvider.getAgentDetail(agentId));
     }

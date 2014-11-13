@@ -11,5 +11,5 @@
 
     <bean id="diskUsageProvider" class="sns.teamcity.agent.DiskUsageProvider"/>
 
-    <bean id="lifecycle" class="sns.teamcity.AgentCleanerPluginAgentLifecycle"/>
+    <bean id="lifecycle" class="sns.teamcity.agent.AgentCleanerPluginAgentLifecycle"/>
 </beans>

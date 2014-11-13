@@ -4,6 +4,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.junit.internal.matchers.TypeSafeMatcher;
+import sns.teamcity.model.DiskUsage;
+import sns.teamcity.model.FileSummary;
 
 import java.util.Collection;
 import java.util.Hashtable;

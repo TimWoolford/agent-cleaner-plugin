@@ -1,4 +1,4 @@
-package sns.teamcity;
+package sns.teamcity.model;
 
 import java.io.File;
 import java.util.Hashtable;

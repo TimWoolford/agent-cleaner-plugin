@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.Hashtable;
 
-import static sns.teamcity.BooleanResponseBuilder.responseFor;
+import static sns.teamcity.util.BooleanResponseBuilder.responseFor;
 import static sns.teamcity.util.FileEncoder.decode;
 
 public class AgentCleaner {

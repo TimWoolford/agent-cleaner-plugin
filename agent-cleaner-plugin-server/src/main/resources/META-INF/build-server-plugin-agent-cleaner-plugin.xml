@@ -24,7 +24,7 @@
 
     <bean id="lifecycle" class="sns.teamcity.AgentManagementLifecycle"/>
 
-    <bean id="viewBuilder" class="sns.teamcity.model.ViewBuilder"/>
+    <bean id="viewBuilder" class="sns.teamcity.view.ViewBuilder"/>
 
     <bean id="agentRpcCaller" class="sns.teamcity.rpc.RpcCaller"/>
 </beans>

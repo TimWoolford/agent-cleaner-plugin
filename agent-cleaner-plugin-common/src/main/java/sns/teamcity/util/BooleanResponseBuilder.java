@@ -1,4 +1,6 @@
-package sns.teamcity;
+package sns.teamcity.util;
+
+import com.google.common.collect.ImmutableMap;
 
 import java.util.Hashtable;
 
@@ -8,8 +10,6 @@ public class BooleanResponseBuilder {
     }
 
     public static Hashtable<String, String> responseFor(boolean result) {
-        Hashtable<String, String> hashtable = new Hashtable<String, String>();
-        hashtable.put("success", result ? "true" : "false");
-        return hashtable;
+        return new Hashtable<String, String>(ImmutableMap.of("success", result ? "true" : "false"));
     }
 }
