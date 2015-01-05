@@ -16,6 +16,7 @@ import java.util.List;
 public class AgentManagementLifecycle extends BuildServerAdapter {
     private static final Logger LOG = Loggers.SERVER;
     private static final double ONE_GIGABYTE = Math.pow(1024, 3);
+    private static final double TWO_GIGABYTES = ONE_GIGABYTE * 2;
 
     private RpcCaller rpcCaller;
     private List<CleanAction> actions;
@@ -35,7 +36,7 @@ public class AgentManagementLifecycle extends BuildServerAdapter {
         SBuildAgent agent = runningBuild.getAgent();
 
         for (CleanAction action : actions) {
-            if (rpcCaller.diskSpaceSummary(agent).getFreeSpace() < ONE_GIGABYTE) {
+            if (rpcCaller.diskSpaceSummary(agent).getFreeSpace() < TWO_GIGABYTES) {
                 action.doAction(agent);
             }
         }

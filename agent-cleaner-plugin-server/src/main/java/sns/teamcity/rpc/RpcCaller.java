@@ -5,10 +5,7 @@ import jetbrains.buildServer.xmlrpc.XmlRpcFactory;
 import jetbrains.buildServer.xmlrpc.XmlRpcTarget;
 import sns.teamcity.model.DiskSpaceSummary;
 import sns.teamcity.model.DiskUsage;
-import sns.teamcity.rpc.result.DiskSpaceSummaryTransformer;
-import sns.teamcity.rpc.result.DiskUsageTransformer;
-import sns.teamcity.rpc.result.ResultTransformer;
-import sns.teamcity.rpc.result.SuccessTransformer;
+import sns.teamcity.rpc.method.*;
 
 import java.util.Hashtable;
 
@@ -16,41 +13,43 @@ public class RpcCaller {
     private final XmlRpcFactory rpcFactory;
 
     public RpcCaller() {
-        rpcFactory = XmlRpcFactory.getInstance();
+        this.rpcFactory = XmlRpcFactory.getInstance();
     }
 
     public DiskSpaceSummary diskSpaceSummary(SBuildAgent agent) {
-        return callAndTransformResult(agent, new DiskSpaceSummaryTransformer(), RpcMethod.diskSpaceSummary);
+        return callAndTransformResult(agent, new DiskSpaceSummaryMethod());
     }
 
     public boolean rebuildAgent(SBuildAgent agent) {
-        return callAndTransformResult(agent, new SuccessTransformer(), RpcMethod.rebuild);
+        return callAndTransformResult(agent, new RebuildMethod());
     }
 
     public boolean cancelRebuild(SBuildAgent agent) {
-        return callAndTransformResult(agent, new SuccessTransformer(), RpcMethod.cancel);
+        return callAndTransformResult(agent, new CancelRebuildMethod());
     }
 
     public boolean hasPendingRebuild(SBuildAgent agent) {
-        return callAndTransformResult(agent, new SuccessTransformer(), RpcMethod.hasPendingRebuild);
+        return callAndTransformResult(agent, new HasPendingRebuildMethod());
     }
 
     public DiskUsage diskUsage(SBuildAgent agent) {
-        return callAndTransformResult(agent, new DiskUsageTransformer(), RpcMethod.usage);
+        return callAndTransformResult(agent, new DiskUsageMethod("/data/apps", "/logs/apps", "${user.home}/.m2/repository", "${user.home}/.gradle"));
     }
 
     public boolean cleanAppDirs(SBuildAgent agent) {
-        return callAndTransformResult(agent, new SuccessTransformer(), RpcMethod.cleanSnsAppDirs);
+        return callAndTransformResult(agent, new CleanDirectoriesMethod("/data/apps", "/logs/apps"));
     }
 
     public boolean cleanMavenRepo(SBuildAgent agent) {
-        return callAndTransformResult(agent, new SuccessTransformer(), RpcMethod.cleanMavenRepository);
+        return callAndTransformResult(agent, new CleanDirectoriesMethod("${user.home}/.m2/repository", "${user.home}/.gradle"));
     }
 
-    private <T> T callAndTransformResult(SBuildAgent agent, ResultTransformer<T> transformer, RpcMethod rpcMethod) {
+    private <T> T callAndTransformResult(SBuildAgent agent, RpcMethod<T> rpcMethod) {
         XmlRpcTarget xmlRpcTarget = rpcFactory.create(urlFor(agent), "TeamCity Agent", rpcMethod.timeout(), false);
 
-        return transformer.transform(call(rpcMethod, xmlRpcTarget));
+        Hashtable<String, String> result = call(rpcMethod, xmlRpcTarget);
+
+        return rpcMethod.resultTransformer().transform(result);
     }
 
     @SuppressWarnings("unchecked")
