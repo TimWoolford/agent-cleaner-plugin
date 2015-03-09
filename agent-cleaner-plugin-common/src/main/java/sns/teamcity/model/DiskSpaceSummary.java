@@ -1,6 +1,5 @@
 package sns.teamcity.model;
 
-import java.io.File;
 import java.util.Hashtable;
 
 import static sns.teamcity.Formatter.formatDiskSpace;
@@ -15,11 +14,6 @@ public class DiskSpaceSummary {
     public DiskSpaceSummary(long freeSpace, long totalSpace) {
         this.freeSpace = freeSpace;
         this.totalSpace = totalSpace;
-    }
-
-    public DiskSpaceSummary(File file) {
-        totalSpace = file.getTotalSpace();
-        freeSpace = file.getFreeSpace();
     }
 
     public DiskSpaceSummary(Hashtable<String, String> hashtable) {

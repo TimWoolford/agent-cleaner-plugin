@@ -3,6 +3,7 @@ package sns.teamcity.agent;
 import jetbrains.buildServer.agent.BuildAgent;
 import sns.teamcity.model.DiskSpaceSummary;
 
+import java.io.File;
 import java.util.Hashtable;
 
 public class DiskSpaceSummariser {
@@ -14,6 +15,7 @@ public class DiskSpaceSummariser {
     }
 
     public Hashtable<String, String> diskSpaceSummary() {
-        return new DiskSpaceSummary(buildAgent.getConfiguration().getWorkDirectory()).toHashTable();
+        File workDirectory = buildAgent.getConfiguration().getWorkDirectory();
+        return new DiskSpaceSummary(workDirectory.getTotalSpace(), workDirectory.getFreeSpace()).toHashTable();
     }
 }

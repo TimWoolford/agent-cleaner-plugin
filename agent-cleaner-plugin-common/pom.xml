@@ -12,14 +12,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jetbrains.teamcity</groupId>
-            <artifactId>runtime-util</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.teamcity</groupId>
-            <artifactId>common-api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
@@ -35,6 +27,10 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
         </dependency>
     </dependencies>
 </project>

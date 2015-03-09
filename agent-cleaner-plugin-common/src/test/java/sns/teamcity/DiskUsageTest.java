@@ -11,11 +11,8 @@ import java.util.Collection;
 import java.util.Hashtable;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.junit.internal.matchers.IsCollectionContaining.hasItem;
 
 public class DiskUsageTest {
 

@@ -1,5 +1,6 @@
 package sns.teamcity.persistence;
 
+import com.google.common.base.Throwables;
 import com.thoughtworks.xstream.XStream;
 import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.serverSide.ServerPaths;
@@ -7,9 +8,10 @@ import org.jetbrains.annotations.NotNull;
 import sns.teamcity.model.AgentDirectories;
 import sns.teamcity.model.AgentDirectory;
 
-import java.io.*;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ConfigPersistence {
     private final static String CONFIG_FILE_NAME = "agent-management-config.xml";
@@ -36,8 +38,12 @@ public class ConfigPersistence {
 
         } catch (IOException e) {
             Loggers.SERVER.error("Failed to load config file: " + configFile, e);
+            throw Throwables.propagate(e);
         }
     }
 
+    public AgentDirectories value() {
+        return agentDirectories;
+    }
 
 }

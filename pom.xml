@@ -15,7 +15,7 @@
 
     <properties>
         <teamcity.devPackage.dir>${user.home}/Downloads/TeamCity/devPackage</teamcity.devPackage.dir>
-        <teamcity.openapi.version>7.1.4</teamcity.openapi.version>
+        <teamcity.openapi.version>9.0</teamcity.openapi.version>
         <spring.version>3.0.7.RELEASE</spring.version>
     </properties>
 
@@ -25,29 +25,13 @@
                 <groupId>org.jetbrains.teamcity</groupId>
                 <artifactId>server-api</artifactId>
                 <version>${teamcity.openapi.version}</version>
-                <scope>system</scope>
-                <systemPath>${teamcity.devPackage.dir}/server-api.jar</systemPath>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.teamcity</groupId>
-                <artifactId>common-api</artifactId>
-                <version>${teamcity.openapi.version}</version>
-                <scope>system</scope>
-                <systemPath>${teamcity.devPackage.dir}/common-api.jar</systemPath>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.teamcity</groupId>
                 <artifactId>agent-api</artifactId>
                 <version>${teamcity.openapi.version}</version>
-                <scope>system</scope>
-                <systemPath>${teamcity.devPackage.dir}/agent-api.jar</systemPath>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.teamcity</groupId>
-                <artifactId>runtime-util</artifactId>
-                <version>${teamcity.openapi.version}</version>
-                <scope>system</scope>
-                <systemPath>${teamcity.devPackage.dir}/runtime/runtime-util.jar</systemPath>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -86,9 +70,9 @@
                 <version>3.3.2</version>
             </dependency>
             <dependency>
-            	<groupId>commons-io</groupId>
-            	<artifactId>commons-io</artifactId>
-            	<version>2.4</version>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.4</version>
             </dependency>
 
             <dependency>
@@ -113,9 +97,21 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.8.1</version>
+                <version>4.11</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>1.9.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-all</artifactId>
+                <version>1.3</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -126,11 +122,18 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
+                        <source>1.7</source>
+                        <target>1.7</target>
                     </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
+    <repositories>
+        <repository>
+            <id>jetbrains-all</id>
+            <url>http://repository.jetbrains.com/all</url>
+        </repository>
+    </repositories>
 </project>

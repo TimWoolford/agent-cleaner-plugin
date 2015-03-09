@@ -1,7 +1,7 @@
 package sns.teamcity.util;
 
 import com.google.common.collect.Lists;
-import jetbrains.buildServer.util.StringUtil;
+import com.intellij.openapi.util.text.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;

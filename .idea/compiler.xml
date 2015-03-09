@@ -31,11 +31,10 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="agent-cleaner-plugin" target="1.6" />
-      <module name="agent-cleaner-plugin-agent" target="1.6" />
-      <module name="agent-cleaner-plugin-common" target="1.6" />
-      <module name="agent-cleaner-plugin-server" target="1.6" />
+      <module name="agent-cleaner-plugin-agent" target="1.7" />
+      <module name="agent-cleaner-plugin-common" target="1.7" />
+      <module name="agent-cleaner-plugin-server" target="1.7" />
       <module name="build" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
-
