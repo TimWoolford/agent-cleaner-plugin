@@ -17,15 +17,15 @@ public class DiskSpaceSummary {
     }
 
     public DiskSpaceSummary(Hashtable<String, String> hashtable) {
-        totalSpace = Long.valueOf(hashtable.get(TOTAL_SPACE));
         freeSpace = Long.valueOf(hashtable.get(FREE_SPACE));
+        totalSpace = Long.valueOf(hashtable.get(TOTAL_SPACE));
     }
 
     public Hashtable<String, String> toHashTable() {
         return new Hashtable<String, String>() {
             {
-                put(TOTAL_SPACE, String.valueOf(totalSpace));
                 put(FREE_SPACE, String.valueOf(freeSpace));
+                put(TOTAL_SPACE, String.valueOf(totalSpace));
             }
         };
     }

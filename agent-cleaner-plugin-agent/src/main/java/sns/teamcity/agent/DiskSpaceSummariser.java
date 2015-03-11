@@ -16,6 +16,6 @@ public class DiskSpaceSummariser {
 
     public Hashtable<String, String> diskSpaceSummary() {
         File workDirectory = buildAgent.getConfiguration().getWorkDirectory();
-        return new DiskSpaceSummary(workDirectory.getTotalSpace(), workDirectory.getFreeSpace()).toHashTable();
+        return new DiskSpaceSummary(workDirectory.getFreeSpace(), workDirectory.getTotalSpace()).toHashTable();
     }
 }
