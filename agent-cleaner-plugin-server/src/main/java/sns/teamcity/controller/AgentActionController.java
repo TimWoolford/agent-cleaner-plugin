@@ -53,8 +53,8 @@ public class AgentActionController extends BaseController {
             case cleanAppDirs:
                 agentCleaner.cleanAppsAndLogs(agent);
                 break;
-            case cleanMavenRepo:
-                agentCleaner.cleanMavenRepo(agent);
+            case cleanRepositories:
+                agentCleaner.cleanRepositories(agent);
                 break;
         }
 

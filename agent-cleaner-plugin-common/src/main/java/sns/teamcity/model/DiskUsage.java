@@ -36,7 +36,7 @@ public class DiskUsage {
 
         Map<String, String> map = Maps.transformEntries(rawMap, new StringFileSummaryStringEntryTransformer());
 
-        return new Hashtable<String, String>(map);
+        return new Hashtable<>(map);
     }
 
     public Collection<FileSummary> getFileSummaries() {

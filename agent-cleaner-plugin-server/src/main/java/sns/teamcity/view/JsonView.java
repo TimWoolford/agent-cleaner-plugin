@@ -1,8 +1,6 @@
 package sns.teamcity.view;
 
-import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.module.SimpleModule;
 import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +13,9 @@ public class JsonView implements View {
     private final ObjectMapper objectMapper;
     private final Object myObject;
 
-    public JsonView(Object myObject) {
+    public JsonView(ObjectMapper objectMapper, Object myObject) {
         this.myObject = myObject;
-        objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new SimpleModule("AwesomeSoniqueModule", Version.unknownVersion()));
+        this.objectMapper = objectMapper;
     }
 
     @Override

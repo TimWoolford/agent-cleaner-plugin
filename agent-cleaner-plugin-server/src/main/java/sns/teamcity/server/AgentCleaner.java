@@ -16,9 +16,9 @@ public class AgentCleaner {
         }
     }
 
-    public void cleanMavenRepo(SBuildAgent agent) {
+    public void cleanRepositories(SBuildAgent agent) {
         if (agent.getRunningBuild() == null) {
-            rpcCaller.cleanMavenRepo(agent);
+            rpcCaller.cleanRepositories(agent);
         }
     }
 }

@@ -70,7 +70,7 @@ public class AgentManagementLifecycle extends BuildServerAdapter {
         @Override
         public void doAction(SBuildAgent agent) {
             LOG.info("Cleaning Maven Repo to reclaim disk space");
-            rpcCaller.cleanMavenRepo(agent);
+            rpcCaller.cleanRepositories(agent);
         }
     }
 

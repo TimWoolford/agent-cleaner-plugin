@@ -1,21 +1,20 @@
 package sns.teamcity.page;
 
 import jetbrains.buildServer.controllers.admin.AdminPage;
-import jetbrains.buildServer.serverSide.auth.AuthUtil;
 import jetbrains.buildServer.serverSide.auth.Permission;
-import jetbrains.buildServer.serverSide.auth.SecurityContext;
 import jetbrains.buildServer.web.openapi.Groupable;
 import jetbrains.buildServer.web.openapi.PagePlaces;
+import jetbrains.buildServer.web.openapi.PositionConstraint;
 import org.jetbrains.annotations.NotNull;
 import sns.teamcity.ResourceLocator;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class AgentManagementAdminPage extends AdminPage {
 
-    private final SecurityContext securityContext;
-
-    public AgentManagementAdminPage(@NotNull PagePlaces pagePlaces, @NotNull ResourceLocator resourceLocator, @NotNull SecurityContext securityContext) {
+    public AgentManagementAdminPage(@NotNull PagePlaces pagePlaces, @NotNull ResourceLocator resourceLocator) {
         super(pagePlaces, "agent-cleaner-plugin", resourceLocator.agentManagementAdminJsp(), "Agent Management");
-        this.securityContext = securityContext;
+        setPosition(PositionConstraint.last());
     }
 
     @NotNull
@@ -25,7 +24,7 @@ public class AgentManagementAdminPage extends AdminPage {
     }
 
     @Override
-    public boolean isVisible() {
-        return AuthUtil.hasGlobalPermission(securityContext.getAuthorityHolder(), Permission.ADMINISTER_AGENT);
+    public boolean isAvailable(@NotNull HttpServletRequest request) {
+        return super.isAvailable(request) && checkHasGlobalPermission(request, Permission.ADMINISTER_AGENT);
     }
 }

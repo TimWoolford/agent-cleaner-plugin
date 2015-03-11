@@ -17,6 +17,7 @@
         <teamcity.devPackage.dir>${user.home}/Downloads/TeamCity/devPackage</teamcity.devPackage.dir>
         <teamcity.openapi.version>9.0</teamcity.openapi.version>
         <spring.version>3.0.7.RELEASE</spring.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencyManagement>

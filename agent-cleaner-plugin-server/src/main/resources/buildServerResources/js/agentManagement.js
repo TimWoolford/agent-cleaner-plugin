@@ -1,12 +1,12 @@
 function doBulkAction(action) {
     $j.ajax({
-                type: 'POST',
-                url: '/agentManagement/bulkAction/',
-                data: {'action': action},
-                success: function () {
-                    location.reload();
-                }
+            type: 'POST',
+            url: '/agentManagement/bulkAction/',
+            data: {'action': action},
+            success: function () {
+                location.reload();
             }
+        }
     );
 }
 
@@ -21,17 +21,26 @@ function getAgentDetail(agent) {
             setTimeout(function () {
                 getAgentDetail(agent)
             }, 5000);
+        },
+        error: function () {
+            $j('tr#' + agent.id).addClass("agent-error");
+            setTimeout(function () {
+                getAgentDetail(agent)
+            }, 5000);
         }
     });
 }
 
 function doAction(action, agentId) {
     $j.ajax({
-                type: 'POST',
-                url: '/agentManagement/action/',
-                data: {'action': action, 'agentId': agentId},
-                success: hydrateRow
+            type: 'POST',
+            url: '/agentManagement/action/',
+            data: {'action': action, 'agentId': agentId},
+            success: hydrateRow,
+            error: function (agent) {
+                $j('tr#' + agent.id).addClass("agent-error");
             }
+        }
     );
 }
 
@@ -61,36 +70,36 @@ function prepareAgentList() {
                 var row = $j('<tr/>', {id: agent.id}).appendTo(tableBody);
 
                 $j('<td/>', {class: 'build-agent-name'})
-                        .append(buildAgentName(agent))
-                        .appendTo(row);
+                    .append(buildAgentName(agent))
+                    .appendTo(row);
 
                 $j('<td/>', {class: 'build-agent-status'})
-                        .append(buildAgentStatus(agent))
-                        .appendTo(row);
+                    .append(buildAgentStatus(agent))
+                    .appendTo(row);
 
                 $j('<td/>', {class: 'uptime sort-data', text: agent.formattedUptime})
-                        .appendTo(row);
+                    .appendTo(row);
 
                 $j('<td/>', {class: 'percentage sort-data', text: '--'})
-                        .appendTo(row);
+                    .appendTo(row);
 
                 $j('<td/>', {class: 'free-space sort-data', text: '--'})
-                        .appendTo(row);
+                    .appendTo(row);
 
                 $j('<td/>', {class: 'cleanup'})
-                        .html(cleanupButtonsFor(agent))
-                        .appendTo(row);
+                    .html(cleanupButtonsFor(agent))
+                    .appendTo(row);
 
                 $j('<td/>', {class: 'rebuild'})
-                        .html(rebuildButtonFor(agent))
-                        .appendTo(row);
+                    .html(rebuildButtonFor(agent))
+                    .appendTo(row);
 
                 row.hover(
-                        function () {
-                            row.addClass("current-row");
-                        }, function () {
-                            row.removeClass("current-row");
-                        }
+                    function () {
+                        row.addClass("current-row");
+                    }, function () {
+                        row.removeClass("current-row");
+                    }
                 );
 
                 getAgentDetail(agent);
@@ -98,6 +107,9 @@ function prepareAgentList() {
 
             $j('#agentTable').tablesorter({
                 widgets: ["zebra"],
+                cssAsc: "sortedAsc",
+                cssDesc: "sortedDesc",
+                headers: {5: {sorter: false}, 6: {sorter: false}},
                 textExtraction: function (rawNode) {
                     var node = $j(rawNode);
                     if (node.hasClass('sort-data')) {
@@ -114,6 +126,7 @@ function prepareAgentList() {
 
 var hydrateRow = function (agent) {
     var row = $j('tr#' + agent.id);
+    row.removeClass("agent-error")
     updateHtml(row.find('td.build-agent-name'), buildAgentName(agent));
     updateHtml(row.find('td.build-agent-status'), buildAgentStatus(agent));
     updateText(row.find('td.uptime'), agent.formattedUptime);
@@ -135,7 +148,7 @@ function cleanupButtonsFor(agent) {
     var span = $j('<span/>');
     var buildStatus = agent.runningBuildStatus;
     span.append(button(agent, 'cleanAppDirs', 'App Dirs', buildStatus != 'no-build').addClass(buildStatus));
-    span.append(button(agent, 'cleanMavenRepo', 'Maven Repo', buildStatus != 'no-build').addClass(buildStatus));
+    span.append(button(agent, 'cleanRepositories', 'Repositories', buildStatus != 'no-build').addClass(buildStatus));
     return span;
 }
 
@@ -150,7 +163,12 @@ function button(agent, action, value, disabled) {
 }
 
 function buildAgentName(agent) {
-    var agentNameElement = $j('<div/>', {class: agent.runningBuildStatus}).append($j('<a/>', {href: '/agentDetails.html?id=' + agent.id, class: 'sort-data', text: agent.name}));
+    var agentNameElement = $j('<div/>', {class: agent.runningBuildStatus})
+        .append($j('<a/>', {
+            href: '/agentDetails.html?id=' + agent.id,
+            class: 'sort-data',
+            text: agent.name
+        }));
 
     if (agent.buildName) {
         return attachTooltip(agentNameElement, $j('<span/>', {text: agent.buildName}));
@@ -160,23 +178,32 @@ function buildAgentName(agent) {
 }
 
 function buildAgentStatus(agent) {
-    var statusElement = $j('<div/>', {class: 'build-agent-status  sort-data ' + agent.status.toLowerCase(), text: agent.status});
+    var statusElement = $j('<div/>', {class: 'build-agent-status slider ' + agent.status.toLowerCase()})
+        .append($j('<span/>', {text: agent.status, class: "sort-data", style: 'display:none;'}));
+
+    var tooltipText = 'Agent ' + agent.status.toLowerCase() + '.';
 
     if (agent.statusComment) {
-        return statusElement.append(attachTooltip($j('<img/>', {class: 'commentIcon', src: '/img/commentIcon.gif', width: "11px", height: "11px"}),
-                $j('<span/>', {text: agent.statusComment})
-        ));
+        statusElement.addClass("comments");
+        tooltipText += (agent.statusComment) ? ' Comment: ' + agent.statusComment : '';
     }
 
-    return statusElement;
+    return attachTooltip(statusElement,
+        $j('<span/>', {text: tooltipText})
+    );
 }
 
 function usageFor(agent) {
     return $j('<div/>', {class: 'sort-data', text: agent.diskSpaceSummary.formattedFreeSpace})
-            .append(attachTooltip($j('<img/>', {class: 'commentIcon', src: '/img/help.gif', width: "11px", height: "11px"}),
-                    $j('<table/>', {class: 'usage-table'})
-                            .html(rowsFor(agent.diskUsage))
-            )
+        .append(attachTooltip($j('<img/>', {
+                class: 'commentIcon',
+                src: '/img/artifacts.png',
+                width: "11px",
+                height: "11px"
+            }),
+            $j('<table/>', {class: 'usage-table'})
+                .html(rowsFor(agent.diskUsage))
+        )
     );
 }
 
@@ -190,15 +217,15 @@ function rowsFor(usage) {
 
 function attachTooltip(triggerElement, tooltipElement) {
     return triggerElement
-            .mouseover(function (event) {
-                $j('#tooltip-container').html(
-                        $j('<div/>', {class: 'tooltip'})
-                                .css({'position': 'absolute', 'top': event.pageY + 10, 'left': event.pageX + 18})
-                                .append(tooltipElement)
-                );
-            })
-            .mouseout(function () {
-                $j('#tooltip-container').empty();
-            }
+        .mouseover(function (event) {
+            $j('#tooltip-container').html(
+                $j('<div/>', {class: 'tooltip'})
+                    .css({'position': 'absolute', 'top': event.pageY + 10, 'left': event.pageX + 18})
+                    .append(tooltipElement)
+            );
+        })
+        .mouseout(function () {
+            $j('#tooltip-container').empty();
+        }
     );
 }

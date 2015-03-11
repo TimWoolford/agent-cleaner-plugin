@@ -9,12 +9,11 @@
     padding: 5px
 }
 
-input.green-build {
-    opacity: 0.65;
-    cursor: not-allowed;
+#agentTable th div {
+    display: inline;
 }
 
-input.red-build {
+input.green-build, input.red-build {
     opacity: 0.65;
     cursor: not-allowed;
 }
@@ -22,16 +21,6 @@ input.red-build {
 td.cleanup {
     white-space: nowrap;
     width: 145px;
-}
-
-th.tablesorter-headerAsc span {
-  background: url('../../../../img/sortUp.gif') no-repeat right;
-  padding-right: 16px;
-}
-
-th.tablesorter-headerDesc span {
-  background: url('../../../../img/sortDown.gif') no-repeat right;
-  padding-right: 16px;
 }
 
 .build-agent-name div.green-build {
@@ -44,28 +33,20 @@ th.tablesorter-headerDesc span {
     padding-right: 16px;
 }
 
-tr.even {
+tr.even, tr.even td {
     background: #ededed;
 }
 
-tr.even td {
-    background: #ededed;
-}
-
-tr.odd {
+tr.odd, tr.odd td {
     background: #FFFFFF;
 }
 
-tr.odd td {
-    background: #FFFFFF;
-}
-
-tr.current-row {
+tr.current-row, tr.current-row td {
     background: #FCFFE0;
 }
 
-tr.current-row td {
-    background: #FCFFE0;
+tr.agent-error, tr.agent-error td {
+    background: #CD888E;
 }
 
 td.usage-path {
@@ -73,5 +54,5 @@ td.usage-path {
 }
 
 td.usage-size {
-    text-align:right;
+    text-align: right;
 }

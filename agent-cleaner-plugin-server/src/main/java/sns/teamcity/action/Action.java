@@ -6,6 +6,6 @@ public enum Action {
     rebuild,
     cancelRebuild,
     cleanAppDirs,
-    cleanMavenRepo,
+    cleanRepositories,
     ;
 }

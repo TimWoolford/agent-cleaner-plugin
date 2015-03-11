@@ -40,7 +40,7 @@ public class RpcCaller {
         return callAndTransformResult(agent, new CleanDirectoriesMethod("/data/apps", "/logs/apps"));
     }
 
-    public boolean cleanMavenRepo(SBuildAgent agent) {
+    public boolean cleanRepositories(SBuildAgent agent) {
         return callAndTransformResult(agent, new CleanDirectoriesMethod("${user.home}/.m2/repository", "${user.home}/.gradle"));
     }
 

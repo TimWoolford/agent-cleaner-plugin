@@ -2,6 +2,7 @@ package sns.teamcity;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Iterables;
 import jetbrains.buildServer.messages.Status;
 import jetbrains.buildServer.serverSide.BuildAgentManager;
 import jetbrains.buildServer.serverSide.SBuildAgent;
@@ -26,7 +27,7 @@ public class AgentProvider {
     }
 
     public AgentDetail getAgentDetail(int agentId) {
-        SBuildAgent sBuildAgent = buildAgentManager.findAgentById(agentId, false);
+        SBuildAgent sBuildAgent = buildAgentManager.findAgentById(agentId, true);
 
         return new AgentDetail(
                 sBuildAgent.getId(),
@@ -43,7 +44,9 @@ public class AgentProvider {
     }
 
     public List<AgentSummary> getAgentSummaries() {
-        return FluentIterable.from(buildAgentManager.getRegisteredAgents()).transform(toAgentSummary()).toList();
+        return FluentIterable.from(Iterables.concat(buildAgentManager.getRegisteredAgents(), buildAgentManager.getUnregisteredAgents()))
+                .transform(toAgentSummary())
+                .toList();
     }
 
     private String statusOf(SRunningBuild runningBuild) {
