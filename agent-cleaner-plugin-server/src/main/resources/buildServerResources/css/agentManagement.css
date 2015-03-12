@@ -13,6 +13,12 @@
     display: inline;
 }
 
+.config-item {
+  padding: 5px;
+  border-bottom: darkgrey solid 1px;
+  display: block;
+}
+
 input.green-build, input.red-build {
     opacity: 0.65;
     cursor: not-allowed;

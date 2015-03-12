@@ -15,6 +15,8 @@ public class AgentManagementAdminPage extends AdminPage {
     public AgentManagementAdminPage(@NotNull PagePlaces pagePlaces, @NotNull ResourceLocator resourceLocator) {
         super(pagePlaces, "agent-cleaner-plugin", resourceLocator.agentManagementAdminJsp(), "Agent Management");
         setPosition(PositionConstraint.last());
+        addCssFile(resourceLocator.agentManagementConfigCss());
+        addJsFile(resourceLocator.agentManagementConfigJs());
     }
 
     @NotNull

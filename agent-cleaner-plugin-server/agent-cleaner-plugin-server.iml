@@ -81,7 +81,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: jfree:jfreechart:1.0.9" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.ehcache:ehcache:1.6.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.opencsv:opencsv:1.8" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: opensymphony:quartz:1.6.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-jdbc:7.0.23" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-juli:7.0.23" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.freemarker:freemarker:2.3.19" level="project" />

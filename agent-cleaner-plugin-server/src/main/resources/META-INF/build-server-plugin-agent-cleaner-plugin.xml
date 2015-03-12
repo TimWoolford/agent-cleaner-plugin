@@ -18,6 +18,8 @@
 
     <bean id="agentActionController" class="sns.teamcity.controller.AgentActionController"/>
 
+    <bean id="adminController" class="sns.teamcity.controller.AdminController"/>
+
     <bean id="rebuildAction" class="sns.teamcity.action.AgentRebuilder"/>
 
     <bean id="cleanAction" class="sns.teamcity.server.AgentCleaner"/>
@@ -27,4 +29,6 @@
     <bean id="viewBuilder" class="sns.teamcity.view.ViewBuilder"/>
 
     <bean id="agentRpcCaller" class="sns.teamcity.rpc.RpcCaller"/>
+
+    <bean id="configPersistence" class="sns.teamcity.persistence.ConfigPersistence"/>
 </beans>

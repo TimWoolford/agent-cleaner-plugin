@@ -1,0 +1,36 @@
+#config-wrapper {
+    position: relative;
+}
+
+#config-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#config-list li {
+    margin: 0;
+    padding: 0;
+}
+
+#config-header {
+    background-color: #DDDDDD
+}
+
+#config-header .agent-pattern-name {
+    position: relative;
+}
+
+#config-header .directories {
+    position: absolute;
+    left: 200px;
+}
+
+#config-list .agent-pattern-name {
+    position: relative;
+}
+
+#config-list .directories {
+    position: absolute;
+    left: 200px;
+}

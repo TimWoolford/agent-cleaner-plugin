@@ -27,6 +27,12 @@
                 <artifactId>server-api</artifactId>
                 <version>${teamcity.openapi.version}</version>
                 <scope>provided</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>opensymphony</groupId>
+                        <artifactId>quartz</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.teamcity</groupId>

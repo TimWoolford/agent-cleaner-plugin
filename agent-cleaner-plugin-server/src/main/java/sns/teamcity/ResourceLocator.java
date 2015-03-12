@@ -25,8 +25,16 @@ public class ResourceLocator {
         return javascript("agentManagement");
     }
 
+    public String agentManagementConfigJs() {
+        return javascript("agentManagementConfig");
+    }
+
     public String agentManagementCss() {
         return css("agentManagement");
+    }
+
+    public String agentManagementConfigCss() {
+        return css("agentManagementConfig");
     }
 
     private String jsp(String fileName) {

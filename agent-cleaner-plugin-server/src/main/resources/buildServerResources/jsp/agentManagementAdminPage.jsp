@@ -1,3 +1,12 @@
-<h2>Not Yet Implemented</h2>
+<div id="config-wrapper">
+    <div id="config-header">
+        <span class="agent-pattern-name">Agent Pattern Name</span>
+        <span class="directories">Directories</span>
+    </div>
 
-Sorry...
+    <ol id="config-list"></ol>
+</div>
+
+<script type="text/javascript">
+    $j(document).ready(prepareConfigList());
+</script>

@@ -8,10 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import sns.teamcity.model.AgentDirectories;
 import sns.teamcity.model.AgentDirectory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 public class ConfigPersistence {
     private final static String CONFIG_FILE_NAME = "agent-management-config.xml";
@@ -32,18 +31,42 @@ public class ConfigPersistence {
     }
 
     private AgentDirectories loadSettings() {
-        try (InputStream inputStream = new FileInputStream(configFile)) {
+        return new AgentDirectories(
+                newArrayList(
+                        new AgentDirectory(
+                                "ba.*",
+                                newArrayList("/data/apps", "/logs/apps", "${user.home}/.m2/repository", "${user.home}/.gradle")
+                        )
+                )
+        );
 
-            return (AgentDirectories) xStream.fromXML(inputStream);
+//        if (!configFile.exists()) {
+//            //TODO: less hack
+//        }
+//
+//        try (InputStream inputStream = new FileInputStream(configFile)) {
+//            return (AgentDirectories) xStream.fromXML(inputStream);
+//
+//        } catch (IOException e) {
+//            Loggers.SERVER.error("Failed to load config file: " + configFile, e);
+//            throw Throwables.propagate(e);
+//        }
+    }
 
+    public AgentDirectories getAgentDirectories() {
+        return agentDirectories;
+    }
+
+    public AgentDirectories persist() {
+        try (OutputStream outputStream = new FileOutputStream(configFile)) {
+            xStream.toXML(agentDirectories, outputStream);
+            return agentDirectories;
         } catch (IOException e) {
-            Loggers.SERVER.error("Failed to load config file: " + configFile, e);
             throw Throwables.propagate(e);
         }
     }
 
-    public AgentDirectories value() {
-        return agentDirectories;
+    public String getCryptKey() {
+        return jetbrains.buildServer.serverSide.crypt.RSACipher.getHexEncodedPublicKey();
     }
-
 }
