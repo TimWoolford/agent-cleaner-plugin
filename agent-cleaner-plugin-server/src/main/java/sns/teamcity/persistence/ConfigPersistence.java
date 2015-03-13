@@ -2,13 +2,15 @@ package sns.teamcity.persistence;
 
 import com.google.common.base.Throwables;
 import com.thoughtworks.xstream.XStream;
-import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.serverSide.ServerPaths;
 import org.jetbrains.annotations.NotNull;
 import sns.teamcity.model.AgentDirectories;
 import sns.teamcity.model.AgentDirectory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -36,6 +38,10 @@ public class ConfigPersistence {
                         new AgentDirectory(
                                 "ba.*",
                                 newArrayList("/data/apps", "/logs/apps", "${user.home}/.m2/repository", "${user.home}/.gradle")
+                        ),
+                        new AgentDirectory(
+                                "dev.*",
+                                newArrayList("${user.home}/.m2/repository", "${user.home}/.gradle")
                         )
                 )
         );
@@ -64,9 +70,5 @@ public class ConfigPersistence {
         } catch (IOException e) {
             throw Throwables.propagate(e);
         }
-    }
-
-    public String getCryptKey() {
-        return jetbrains.buildServer.serverSide.crypt.RSACipher.getHexEncodedPublicKey();
     }
 }

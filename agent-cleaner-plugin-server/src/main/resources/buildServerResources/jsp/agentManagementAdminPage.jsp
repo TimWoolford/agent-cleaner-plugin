@@ -1,11 +1,14 @@
-<div id="config-wrapper">
-    <div id="config-header">
-        <span class="agent-pattern-name">Agent Pattern Name</span>
-        <span class="directories">Directories</span>
-    </div>
-
-    <ol id="config-list"></ol>
-</div>
+<table class="config-table dark">
+    <thead>
+    <tr>
+        <th>Agent Name Pattern</th>
+        <th>Directories</th>
+        <th colspan="2">Actions</th>
+    </tr>
+    </thead>
+    <tbody id="sortable-container">
+    </tbody>
+</table>
 
 <script type="text/javascript">
     $j(document).ready(prepareConfigList());

@@ -39,7 +39,7 @@ public class ConfigPersistenceTest {
     public void readsConfigurationFromFile() throws Exception {
         AgentDirectories value = configPersistence.getAgentDirectories();
 
-        assertThat(value, IsIterableWithSize.<AgentDirectory>iterableWithSize(1));
+        assertThat(value, IsIterableWithSize.<AgentDirectory>iterableWithSize(2));
     }
 
     private String configXml() {
