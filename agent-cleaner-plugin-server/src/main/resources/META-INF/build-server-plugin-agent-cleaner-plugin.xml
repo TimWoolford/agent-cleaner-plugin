@@ -31,4 +31,6 @@
     <bean id="agentRpcCaller" class="sns.teamcity.rpc.RpcCaller"/>
 
     <bean id="configPersistence" class="sns.teamcity.persistence.ConfigPersistence"/>
+
+    <bean id="jsoniser" class="sns.teamcity.view.Jsoniser"/>
 </beans>
