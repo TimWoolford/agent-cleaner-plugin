@@ -16,6 +16,12 @@ table.config-table td {
 
 .agent-directory > input {
     border: none;
-    border-bottom: 1px solid #bfbfbf;
     outline: none;
+    box-shadow: none;
+    border-bottom: 1px solid #bfbfbf;
+    width: 100%;
+}
+
+.modalDialogBody > table {
+    width: 100%
 }
