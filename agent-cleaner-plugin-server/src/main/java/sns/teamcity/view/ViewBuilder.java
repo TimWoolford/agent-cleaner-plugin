@@ -3,13 +3,13 @@ package sns.teamcity.view;
 import org.springframework.web.servlet.ModelAndView;
 
 public class ViewBuilder {
-    private final Jsoniser jsoniser;
+    private final JsonWrapper json;
 
-    public ViewBuilder(Jsoniser jsoniser) {
-        this.jsoniser = jsoniser;
+    public ViewBuilder(JsonWrapper json) {
+        this.json = json;
     }
 
     public ModelAndView buildView(Object object) {
-        return new ModelAndView(new JsonView(jsoniser, object));
+        return new ModelAndView(new JsonView(json, object));
     }
 }

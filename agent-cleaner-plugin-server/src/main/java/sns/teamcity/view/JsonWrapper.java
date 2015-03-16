@@ -5,10 +5,10 @@ import com.google.common.base.Throwables;
 
 import java.io.IOException;
 
-public class Jsoniser {
+public class JsonWrapper {
     private final ObjectMapper objectMapper;
 
-    public Jsoniser() {
+    public JsonWrapper() {
         objectMapper = new ObjectMapper();
         ;
     }

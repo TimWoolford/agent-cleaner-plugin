@@ -7,11 +7,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import sns.teamcity.model.AgentDirectories;
-import sns.teamcity.model.AgentDirectory;
+import sns.teamcity.model.AgentConfigurations;
+import sns.teamcity.model.AgentConfig;
 
 import java.io.File;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -37,21 +38,30 @@ public class ConfigPersistenceTest {
 
     @Test
     public void readsConfigurationFromFile() throws Exception {
-        AgentDirectories value = configPersistence.getAgentDirectories();
+        AgentConfigurations value = configPersistence.getAgentConfigurations();
 
-        assertThat(value, IsIterableWithSize.<AgentDirectory>iterableWithSize(2));
+        assertThat(value, IsIterableWithSize.<AgentConfig>iterableWithSize(1));
+    }
+
+    @Test
+    public void retrievesMatchingConfig() throws Exception {
+        AgentConfig agentConfig = configPersistence.agentConfigFor("ba333");
+
+        assertThat(agentConfig.getFreeSpaceThreshold(), is(100L));
     }
 
     private String configXml() {
         return "" +
-                "<agentDirectories>" +
-                "  <agentDirectory>" +
-                "     <agentNamePattern>ba.*</agentNamePattern>" +
-                "     <directory>dir1</directory>" +
-                "     <directory>dir2</directory>" +
-                "     <directory>dir3</directory>" +
-                "  </agentDirectory>" +
-                "</agentDirectories>" +
+                "<agentConfigurations>" +
+                "    <agentConfig>" +
+                "        <id>foo</id>" +
+                "        <agentNamePattern>ba.*</agentNamePattern>" +
+                "        <freeSpaceThreshold>100</freeSpaceThreshold>" +
+                "        <directory>dir1</directory>" +
+                "        <directory>dir2</directory>" +
+                "        <directory>dir3</directory>" +
+                "    </agentConfig>" +
+                "</agentConfigurations>" +
                 "";
     }
 }

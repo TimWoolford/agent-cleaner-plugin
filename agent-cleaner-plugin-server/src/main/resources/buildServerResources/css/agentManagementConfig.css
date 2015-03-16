@@ -13,3 +13,9 @@ table.config-table td {
     margin: 0;
     padding: 0;
 }
+
+.agent-directory > input {
+    border: none;
+    border-bottom: 1px solid #bfbfbf;
+    outline: none;
+}

@@ -11,18 +11,33 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 
-@XStreamAlias("agentDirectory")
-public class AgentDirectory {
+@XStreamAlias("agentConfig")
+public class AgentConfig {
+    @XStreamAlias("id")
+    private final String id;
+
     @XStreamAlias("agentNamePattern")
     private final String agentNamePattern;
+
+    @XStreamAlias("freeSpaceThreshold")
+    private final Long freeSpaceThreshold;
 
     @XStreamImplicit(itemFieldName = "directory")
     private final List<String> directories;
 
     @JsonCreator
-    public AgentDirectory(@JsonProperty("agentNamePattern") String agentNamePattern, @JsonProperty("directories") List<String> directories) {
+    public AgentConfig(@JsonProperty("id") String id,
+                       @JsonProperty("agentNamePattern") String agentNamePattern,
+                       @JsonProperty("freeSpaceThreshold") Long freeSpaceThreshold,
+                       @JsonProperty("directories") List<String> directories) {
+        this.id = id;
         this.agentNamePattern = agentNamePattern;
+        this.freeSpaceThreshold = freeSpaceThreshold;
         this.directories = directories;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getAgentNamePattern() {
@@ -31,6 +46,10 @@ public class AgentDirectory {
 
     public List<String> getDirectories() {
         return directories;
+    }
+
+    public Long getFreeSpaceThreshold() {
+        return freeSpaceThreshold;
     }
 
     @Override

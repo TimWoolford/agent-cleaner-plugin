@@ -32,5 +32,5 @@
 
     <bean id="configPersistence" class="sns.teamcity.persistence.ConfigPersistence"/>
 
-    <bean id="jsoniser" class="sns.teamcity.view.Jsoniser"/>
+    <bean id="jsoniser" class="sns.teamcity.view.JsonWrapper"/>
 </beans>

@@ -12,23 +12,23 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.util.Iterator;
 import java.util.List;
 
-@XStreamAlias("agentDirectories")
-public class AgentDirectories implements Iterable<AgentDirectory> {
+@XStreamAlias("agentConfigurations")
+public class AgentConfigurations implements Iterable<AgentConfig> {
 
     @XStreamImplicit
-    private final List<AgentDirectory> agentDirectories;
+    private final List<AgentConfig> agentDirectories;
 
     @JsonCreator
-    public AgentDirectories(@JsonProperty("agentDirectories") List<AgentDirectory> agentDirectories) {
+    public AgentConfigurations(@JsonProperty("agentConfigurations") List<AgentConfig> agentDirectories) {
         this.agentDirectories = agentDirectories;
     }
 
-    public List<AgentDirectory> getAgentDirectories() {
+    public List<AgentConfig> getAgentConfigurations() {
         return agentDirectories;
     }
 
     @Override
-    public Iterator<AgentDirectory> iterator() {
+    public Iterator<AgentConfig> iterator() {
         return agentDirectories.iterator();
     }
 
