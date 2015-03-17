@@ -23,7 +23,11 @@ function getAgentDetail(agent) {
             }, 5000);
         },
         error: function () {
-            $j('tr#' + agent.id).addClass("agent-error");
+            $j('tr#' + agent.id + ' > td.build-agent-status > div.build-agent-status')
+                .removeClass('enabled')
+                .removeClass('disabled')
+                .addClass("failed");
+
             setTimeout(function () {
                 getAgentDetail(agent)
             }, 5000);
@@ -229,3 +233,16 @@ function attachTooltip(triggerElement, tooltipElement) {
         }
     );
 }
+
+DirectoryDialog = OO.extend(BS.AbstractModalDialog, {
+   getContainer: function (){
+       return $('directoryDialog');
+   },
+
+    showDirectories: function() {
+        this.show();
+    },
+    clean: function () {
+        console.log("cleaning!")
+    }
+});

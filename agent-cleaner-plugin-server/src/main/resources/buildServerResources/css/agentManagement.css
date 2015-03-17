@@ -1,8 +1,3 @@
-.build-agent-status.disabled {
-    text-decoration: line-through;
-    color: darkred;
-}
-
 .tooltip {
     border: 1px solid black;
     background-color: white;
@@ -11,12 +6,6 @@
 
 #agentTable th div {
     display: inline;
-}
-
-.config-item {
-  padding: 5px;
-  border-bottom: darkgrey solid 1px;
-  display: block;
 }
 
 input.green-build, input.red-build {
@@ -51,14 +40,15 @@ tr.current-row, tr.current-row td {
     background: #FCFFE0;
 }
 
-tr.agent-error, tr.agent-error td {
-    background: #CD888E;
-}
-
 td.usage-path {
     font-style: italic;
 }
 
 td.usage-size {
     text-align: right;
+}
+
+.slider.failed {
+    background-image: url('../../../../img/attentionCommentRed.png');
+    height: 15px;
 }
