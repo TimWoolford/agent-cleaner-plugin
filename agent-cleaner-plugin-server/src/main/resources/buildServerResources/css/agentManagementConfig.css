@@ -8,13 +8,26 @@ table.config-table td {
     text-align: left;
 }
 
+table.agent-configuration {
+    border-collapse: collapse;
+}
+
+table.agent-configuration td {
+    padding: 5px;
+    border-bottom: black solid 1px;
+    text-align: left;
+    vertical-align: top;
+}
+
 .directory-list {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.agent-directory > input {
+.agent-directory > input,
+tr.agent-name-pattern > td > input,
+tr.free-space-threshold > td > input {
     border: none;
     outline: none;
     box-shadow: none;
@@ -24,4 +37,10 @@ table.config-table td {
 
 .modalDialogBody > table {
     width: 100%
+}
+
+.directories-input > ol >li > .handle {
+  background: url('../../../../img/tags.png');
+  width: 15px;
+  height: 15px;
 }

@@ -27,28 +27,30 @@
         </div>
     </div>
     <div class="modalDialogBody">
-        <table>
-            <tr>
+        <table class="agent-configuration">
+            <tr class="agent-name-pattern">
                 <td>
                     <label for="agent-name-pattern-input">Agent Pattern Name</label>
                 </td>
                 <td>
-                    <input type="text" id="agent-name-pattern-input" class="agent-name-pattern"/>
+                    <input type="text" id="agent-name-pattern-input"/>
                 </td>
             </tr>
-            <tr>
+            <tr class="free-space-threshold">
                 <td>
                     <label for="free-space-threshold-input">Free Space Threshold (Mb)</label>
                 </td>
                 <td>
-                    <input type="text" id="free-space-threshold-input" class="free-space-threshold"/>
+                    <input type="text" id="free-space-threshold-input"/>
                 </td>
             </tr>
-            <tr>
+            <tr class="directories">
                 <td>
                     <label for="agent-name-pattern-input">Deletable Directories</label>
 
-                    <div id="add-directory" class="add-directory">+</div>
+                    <a class="btn add-directory" href="#">
+                        <span class="addNew">Add Directory</span>
+                    </a>
                 </td>
                 <td>
                     <div class="directories directories-input"></div>
@@ -57,7 +59,7 @@
         </table>
 
         <div class="saveButtonsBlock">
-            <input class="agent-id" type="hidden">
+            <input id="agent-id" type="hidden">
             <a href="#" onclick="ConfigDialog.close(); return false" class="btn cancel">Cancel</a>
             <input class="btn btn_primary submitButton" type="submit" name="editObject" value="Save"
                    onclick="ConfigDialog.save()">
